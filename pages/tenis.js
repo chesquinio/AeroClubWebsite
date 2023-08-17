@@ -8,7 +8,6 @@ import Link from "next/link";
 function TennisPage() {
   const router = useRouter();
   const [userId, setUserId] = useState(null);
-  const [hasReservation, setHasReservation] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -32,19 +31,6 @@ function TennisPage() {
     deleteExpiredReservations();
   }, []);
 
-  useEffect(() => {
-    if (userId) {
-      axios
-        .get(`/api/reservation?userId=${userId}`)
-        .then((response) => {
-          setHasReservation(response.data.hasReservation);
-        })
-        .catch((error) => {
-          console.error("Error al verificar la reserva:", error);
-        });
-    }
-  }, [userId]);
-
   const handleReserveClick = () => {
     if (!userId) {
       router.push("/iniciar");
@@ -56,7 +42,7 @@ function TennisPage() {
   return (
     <>
       <Header />
-      <div className={hasReservation ? "hidden" : "mt-20 mx-5 flex justify-center"}>
+      <div className="mt-20 mx-5 flex justify-center">
         <button
           onClick={handleReserveClick}
           className="w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
@@ -64,7 +50,7 @@ function TennisPage() {
           Reservar un Turno
         </button>
       </div>
-      <div className={hasReservation ? "mt-20 mx-5 flex justify-center" : "mt-6 mx-5 flex justify-center"}>
+      <div className="mt-6 mx-5 flex justify-center">
         <Link
           href={"/tenis/mis_turnos"}
           className="text-center w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"

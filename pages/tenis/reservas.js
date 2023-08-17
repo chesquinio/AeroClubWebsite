@@ -4,6 +4,9 @@ import { add, format, isEqual } from "date-fns";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import NoSsr from "@/components/NoSsr";
+import Modal from "@/components/Modal";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 function TennisReservations() {
   const [date, setDate] = useState({
@@ -11,9 +14,12 @@ function TennisReservations() {
     dateTime: null,
   });
   const [selectedCourt, setSelectedCourt] = useState(null);
-  const [userId, setUserId] = useState("");
   const [availableCourts, setAvailableCourts] = useState([]);
   const [reservationMessage, setReservationMessage] = useState("");
+  const [reservationModal, setReservationModal] = useState(false);
+  const [existingReservation, setExistingReservation] = useState(null);
+  const [reservationDetails, setReservationDetails] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (!date.dateTime) return;
@@ -36,27 +42,52 @@ function TennisReservations() {
     setSelectedCourt(courtId);
   };
 
-  const handleReserve = () => {
+  const handleReserve = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/iniciar");
+      return;
+    }
+
     if (!selectedCourt || !date.justDate || !date.dateTime) {
       setReservationMessage("Selecciona una cancha, hora y fecha.");
       return;
     }
 
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setUserId(decodedToken.userId);
-      } catch (error) {
-        console.error("Error al decodificar el token:", error);
-      }
-    } else {
-      console.log("No se encontró el token en el localStorage");
-    }
+    const decodedToken = await jwtDecode(token);
+    const userId = decodedToken.userId;
 
     const formattedDate = format(date.justDate, "yyyy-MM-dd");
     const formattedTime = format(date.dateTime, "kk:mm");
+
+    await axios
+      .get(`/api/reservation?userId=${userId}`)
+      .then((response) => {
+        const existingReservation = response.data.existingReservation;
+        if (existingReservation) {
+          setExistingReservation(existingReservation);
+          setReservationModal(false);
+        } else {
+          setReservationModal(true);
+        }
+      })
+      .catch((error) => {
+        console.error("Error al obtener el turno disponible:", error);
+      });
+
+    const details = {
+      selectedCourt,
+      formattedDate,
+      formattedTime,
+      userId,
+    };
+    setReservationDetails(details);
+  };
+
+  const confirmReservation = () => {
+    const { selectedCourt, formattedDate, formattedTime, userId } =
+      reservationDetails;
 
     axios
       .post("/api/reservation", {
@@ -67,11 +98,12 @@ function TennisReservations() {
       })
       .then((response) => {
         setReservationMessage("Reserva exitosa.");
-        window.location.href = "/tenis";
+        router.push("/tenis");
       })
       .catch((error) => {
         setReservationMessage("No se pudo realizar la reserva.");
       });
+    setReservationModal(false);
   };
 
   const getTimes = () => {
@@ -87,11 +119,19 @@ function TennisReservations() {
 
     const times = [];
 
-    for (let i = morningBeginning; i <= morningEnd; i = add(i, { minutes: interval })) {
+    for (
+      let i = morningBeginning;
+      i <= morningEnd;
+      i = add(i, { minutes: interval })
+    ) {
       times.push(i);
     }
-  
-    for (let i = afternoonBeginning; i <= afternoonEnd; i = add(i, { minutes: interval })) {
+
+    for (
+      let i = afternoonBeginning;
+      i <= afternoonEnd;
+      i = add(i, { minutes: interval })
+    ) {
       times.push(i);
     }
 
@@ -112,27 +152,31 @@ function TennisReservations() {
           }
         />
 
-        <h3 className="text-white text-lg text-center font-normal mb-4 mt-6">Horarios:</h3>
         {date.justDate && (
-          <div className="flex flex-wrap justify-center gap-4 w-4/5 mx-auto">
-            {times?.map((time, i) => (
-              <div key={`time-${i}`}>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setDate((prev) => ({ ...prev, dateTime: time }))
-                  }
-                  className={`py-2 px-4 rounded ${
-                    isEqual(date.dateTime, time)
-                      ? "bg-blue-400 text-white"
-                      : "bg-whiteblue text-gray-800 hover:bg-blue-400 hover:text-white"
-                  } transition duration-300 ease-in-out`}
-                >
-                  {format(time, "kk:mm")}
-                </button>
-              </div>
-            ))}
-          </div>
+          <>
+            <h3 className="text-white text-lg text-center font-normal mb-4 mt-6">
+              Horarios:
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4 w-4/5 mx-auto">
+              {times?.map((time, i) => (
+                <div key={`time-${i}`}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDate((prev) => ({ ...prev, dateTime: time }))
+                    }
+                    className={`py-2 px-4 rounded ${
+                      isEqual(date.dateTime, time)
+                        ? "bg-blue-400 text-white"
+                        : "bg-whiteblue text-gray-800 hover:bg-blue-400 hover:text-white"
+                    } transition duration-300 ease-in-out`}
+                  >
+                    {format(time, "kk:mm")}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
         {date.dateTime && (
@@ -162,6 +206,56 @@ function TennisReservations() {
             >
               Reservar
             </button>
+
+            {existingReservation && (
+              <Modal>
+                <div className="p-4 bg-white rounded shadow-md">
+                  <h2 className="text-lg font-semibold mb-2">
+                    Reserva Invalida
+                  </h2>
+                  <p>Ya tienes una reserva:</p>
+                  <p>Cancha: {existingReservation.court}</p>
+                  <p>Fecha: {existingReservation.reservationDate}</p>
+                  <p>Hora: {existingReservation.reservationTime}</p>
+                  <div className="mt-4">
+                    <div className="bg-blue-400 hover:bg-blue-500 py-2 mx-6 text-white text-center rounded transition">
+                      <Link href={"/tenis"}>Volver</Link>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            )}
+
+            {reservationModal && (
+              <Modal>
+                <div className="p-4 bg-white rounded shadow-md">
+                  <h2 className="text-lg font-semibold mb-2">
+                    Confirmar Reserva
+                  </h2>
+                  <p>Detalles de la reserva:</p>
+                  <p>Cancha: {reservationDetails.selectedCourt}</p>
+                  <p>Fecha: {reservationDetails.formattedDate}</p>
+                  <p>Hora: {reservationDetails.formattedTime}</p>
+                  <div className="mt-4">
+                    <div>
+                      <button
+                        className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition"
+                        onClick={confirmReservation}
+                      >
+                        Confirmar
+                      </button>
+                      <button
+                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 ml-2 transition"
+                        onClick={() => setReservationModal(false)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+            )}
+
             <p className="mt-2 text-md text-gray-500">{reservationMessage}</p>
           </div>
         )}

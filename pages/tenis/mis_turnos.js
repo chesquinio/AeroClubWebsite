@@ -61,8 +61,31 @@ function TurnosListPage() {
           </div>
         ) : (
           <div className="text-center">
-            <h3 className="text-white font-medium text-xl mb-4">No tienes ningún turno reservado</h3>
-            <Link className="bg-blue-500 rounded px-6 py-2 text-lg text-white hover:bg-blue-600 transition" href={"/tenis/reservas"}>Reservar</Link>
+            {userId ? (
+              <div>
+                <h3 className="text-white font-medium text-xl mb-4">
+                  No tienes ningún turno reservado
+                </h3>
+                <Link
+                  className="bg-blue-500 rounded px-6 py-2 text-lg text-white hover:bg-blue-600 transition"
+                  href={"/tenis/reservas"}
+                >
+                  Reservar
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <h3 className="text-white font-medium text-xl mb-4">
+                  No tienes una sesión activa
+                </h3>
+                <Link
+                  className="bg-blue-500 rounded px-6 py-2 text-lg text-white hover:bg-blue-600 transition"
+                  href={"/iniciar"}
+                >
+                  Iniciar Sesión
+                </Link>
+              </div>
+            )}
           </div>
         )}
       </div>

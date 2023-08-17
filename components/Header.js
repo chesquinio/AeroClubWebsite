@@ -56,8 +56,8 @@ const Header = () => {
           <Link href={"/aeroclub"} className={linkStyle}>
             AeroClub
           </Link>
-          <Link href={"/camping"} className={linkStyle}>
-            Camping
+          <Link href={"/colonia"} className={linkStyle}>
+            Colonia
           </Link>
         </div>
         <div className="hidden md:flex justify-end items-center space-x-6 mr-7">
@@ -140,18 +140,18 @@ const Header = () => {
               Tenis
             </Link>
             <Link
-              href={"/"}
+              href={"/aeroclub"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
               AeroClub
             </Link>
             <Link
-              href={"/"}
+              href={"/colonia"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
-              Camping
+              Colonia
             </Link>
             {!isLogged && (
               <Link

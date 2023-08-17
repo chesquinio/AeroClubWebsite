@@ -4,7 +4,7 @@ import { TennisReservation } from "@/model/TennisReservation";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { court, reservationDate, reservationTime, userId } = req.body;
-
+    
     try {
       await mongooseConnect();
 
@@ -29,6 +29,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ message: "Reserva exitosa." });
     } catch (error) {
+      console.error("Error al realizar la reserva:", error);
       return res.status(500).json({ message: "Error al realizar la reserva." });
     }
   } else if (req.method === "GET") {
