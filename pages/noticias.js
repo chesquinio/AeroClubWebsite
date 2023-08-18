@@ -6,7 +6,9 @@ function NewPage() {
   return (
     <div>
         <Header />
-        
+        <div>
+          
+        </div>
     </div>
   )
 }
