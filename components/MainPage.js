@@ -8,7 +8,6 @@ function MainPage() {
   const [newImages, setNewImages] = useState([]);
 
   useEffect(() => {
-    // Llamar a la API para obtener las imágenes
     axios.get('/api/news')
       .then((response) => {
         setNewImages(response.data);
@@ -18,14 +17,16 @@ function MainPage() {
       });
   }, []);
 
+  const visibleImages = newImages.slice(0, 5);
+
   return (
     <div className="mt-20 w-screen flex items-center justify-center bg-gray-100">
       <div className="w-full mx-auto">
-        <Carousel showArrows={false} showThumbs={false} autoPlay infiniteLoop>
-          {newImages.map((newImag, index) => (
+        <Carousel showArrows={false} showStatus={false} showThumbs={false} autoPlay infiniteLoop>
+          {visibleImages.map((newImag, index) => (
             <div key={index} className="overflow-hidden">
               <img
-                className="w-full h-96 object-cover"
+                className="w-full carouselHeigth object-cover"
                 src={newImag.images[0]}
                 alt={`Imagen ${index}`}
               />

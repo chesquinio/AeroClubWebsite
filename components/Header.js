@@ -3,10 +3,26 @@ import Link from "next/link";
 import { isAuthenticated } from "@/lib/auth";
 
 const Header = () => {
-  const [isLogged, setIsLogged] = useState(false);
+  //const [isLogged, setIsLogged] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScroll = () => {
+    if (window.scrollY > 30) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
 
   useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  /*useEffect(() => {
     setIsLogged(isAuthenticated());
   }, []);
 
@@ -18,7 +34,7 @@ const Header = () => {
     clearAuthToken();
 
     window.location.href = "/";
-  };
+  };*/
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,10 +44,11 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const headerStyle = `fixed z-10 top-0 left-0 w-full h-20 flex justify-between items-center px-4 bg-ligthblue`;
+  const headerStyle = `fixed z-10 top-0 left-0 w-full flex justify-between items-center transition-all duration-400 px-4 bg-ligthblue
+  ${isScrolled ? 'h-16' : 'h-24'}`;
 
   const linkStyle =
-    "text-white text-xl font-ligth hover:text-blue-100 transition-colors duration-300";
+    "text-white text-lg font-ligth hover:text-blue-100 transition-all duration-400";
 
   return (
     <header className={headerStyle}>
@@ -46,10 +63,13 @@ const Header = () => {
         <div className="hidden md:flex justify-center items-center space-x-10">
           <div className="flex items-center">
             <Link href={"/"} className={linkStyle}>
-              Home
+              Inicio
             </Link>
-            <div className="h-12 w-0.5 bg-white ml-12"></div>
+            <div className={`${isScrolled ? 'h-9' : 'h-12'} w-0.5 bg-white ml-12 transition-all duration-400`}></div>
           </div>
+          <Link href={"/noticias"} className={linkStyle}>
+            Noticias
+          </Link>
           <Link href={"/tenis"} className={linkStyle}>
             Tenis
           </Link>
@@ -59,10 +79,11 @@ const Header = () => {
           <Link href={"/colonia"} className={linkStyle}>
             Colonia
           </Link>
-        </div>
-        <div className="hidden md:flex justify-end items-center space-x-6 mr-7">
-          {!isLogged && (
-            <Link href={"/iniciar"} className="text-white text-xl font-ligth">
+          <Link href={"/perfil"} className={linkStyle}>
+            Perfil
+          </Link>   
+          {/*!isLogged && (
+            <Link href={"/iniciar"} className="text-white text-lg font-ligth">
               Iniciar Sesión
             </Link>
           )}
@@ -73,9 +94,10 @@ const Header = () => {
             >
               Cerrar Sesión
             </button>
-          )}
+          ) */}
         </div>
       </div>
+
       {/* Icono de menú en dispositivos móviles */}
       <div className="md:hidden z-10 cursor-pointer flex items-center">
         {isMenuOpen ? (
@@ -116,7 +138,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden fixed top-0 left-0 w-full h-screen bg-ligthblue p-4 shadow-md overflow-y-auto">
           <div className="flex flex-row">
-            <Link href={"/"} className="flex items-center ml-1 mt-1">
+            <Link href={"/"} className="flex items-center ml-1 mt-3">
               <img
                 src="https://aeroclub-website.s3.amazonaws.com/1691463050161.jpg"
                 alt="Logo"
@@ -130,7 +152,14 @@ const Header = () => {
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
-              Home
+              Inicio
+            </Link>
+            <Link
+              href={"/noticias"}
+              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              onClick={closeMenu}
+            >
+              Noticias
             </Link>
             <Link
               href={"/tenis"}
@@ -153,7 +182,14 @@ const Header = () => {
             >
               Colonia
             </Link>
-            {!isLogged && (
+            <Link
+              href={"/perfil"}
+              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              onClick={closeMenu}
+            >
+              Perfil
+            </Link>
+            {/*!isLogged && (
               <Link
                 href={"/iniciar"}
                 className="block py-5 w-full rounded text-center text-gray-300 text-xl"
@@ -172,7 +208,7 @@ const Header = () => {
               >
                 Cerrar Sesión
               </button>
-            )}
+              )*/}
           </div>
         </div>
       )}

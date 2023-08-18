@@ -11,7 +11,7 @@ function NewBox({ oneNew }) {
   }
 
   return (
-    <div className="p-3 bg-whiteblue rounded my-4">
+    <div className="p-3 bg-whiteblue rounded my-4 hover:shadow-xl transition-all">
       <div key={oneNew._id}>
         <div onClick={() => goToNew(oneNew._id)} className="flex justify-center cursor-pointer">
           <img className="rounded shadow-sm object-cover h-48 w-96" src={oneNew.images[0]} alt="" />

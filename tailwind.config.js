@@ -15,6 +15,7 @@ module.exports = {
       colors: {
           primary:'#BAE6EA',
           ligthblue:'#5DCBD5',
+          moreblue: '#009FE3',
           moreligthblue:'#51ABBA',
           whiteblue: '#F8F8F8',
           dark: '#0000004A',

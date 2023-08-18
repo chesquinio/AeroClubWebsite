@@ -42,7 +42,7 @@ function TennisPage() {
   return (
     <>
       <Header />
-      <div className="mt-20 mx-5 flex justify-center">
+      <div className="mt-24 mx-5 flex justify-center">
         <button
           onClick={handleReserveClick}
           className="w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
