@@ -9,7 +9,7 @@ function OneNew({ oneNew }) {
     <>
         <Header />
         <div className='mx-5'>
-          <div className='flex flex-col gap-1 rounded-md shadow-md bg-gray-100 mt-28 mb-6 mx-auto container'>
+          <div className='flex flex-col gap-1 rounded-md shadow-md bg-white mt-28 mb-6 mx-auto container'>
               <div className='p-3 m-auto'>
                   <img className='object-scale-down rounded-md' src={oneNew.images[0]} alt={oneNew.title} />
               </div>

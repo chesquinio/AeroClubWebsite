@@ -33,7 +33,7 @@ function MainPage() {
               <div className='absolute bottom-0 right-0 left-0 px-4 pt-4 pb-8 bg-dark'>
                 <h4 className=' text-white  text-4xl font-light'>{newImag.title}</h4>
                 <div className='text-white text-lg font-normal'>
-                  <TextLimit text={newImag.description} maxWords={5} />
+                  <TextLimit text={newImag.description} maxWords={15} />
                 </div>
               </div>
               

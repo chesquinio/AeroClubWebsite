@@ -42,7 +42,24 @@ function TennisPage() {
   return (
     <>
       <Header />
-      <div className="mt-24 mx-5 flex justify-center">
+      <div
+        className="mt-24 h-40 relative"
+        style={{
+          backgroundImage:
+            "url('https://aeroclub-website.s3.amazonaws.com/1692384843379.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
+        <div
+          className="flex justify-center items-center h-full"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+        >
+          <h2 className="text-white text-4xl md:text-5xl">Tenis</h2>
+        </div>
+      </div>
+      <div className="mt-4 mx-5 flex justify-center">
         <button
           onClick={handleReserveClick}
           className="w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
