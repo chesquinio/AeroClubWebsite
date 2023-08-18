@@ -44,11 +44,11 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
-  const headerStyle = `fixed z-10 top-0 left-0 w-full flex justify-between items-center transition-all duration-400 px-4 bg-ligthblue
+  const headerStyle = `fixed z-10 top-0 left-0 w-full flex justify-between items-center transition-all duration-400 px-4 bg-white
   ${isScrolled ? 'h-16' : 'h-24'}`;
 
   const linkStyle =
-    "text-white text-lg font-ligth hover:text-blue-100 transition-all duration-400";
+    "text-gray-500 text-lg font-ligth hover:text-gray-900 transition-all duration-400";
 
   return (
     <header className={headerStyle}>
@@ -65,7 +65,7 @@ const Header = () => {
             <Link href={"/"} className={linkStyle}>
               Inicio
             </Link>
-            <div className={`${isScrolled ? 'h-9' : 'h-12'} w-0.5 bg-white ml-12 transition-all duration-400`}></div>
+            <div className={`${isScrolled ? 'h-9' : 'h-12'} w-0.5 bg-gray-400 ml-12 transition-all duration-400`}></div>
           </div>
           <Link href={"/noticias"} className={linkStyle}>
             Noticias
@@ -124,7 +124,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 text-white"
+            className="w-8 h-8 text-black"
           >
             <path
               strokeLinecap="round"

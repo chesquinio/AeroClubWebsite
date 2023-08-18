@@ -1,3 +1,4 @@
+import Footer from '@/components/Footer';
 import Header from '@/components/Header'
 import { mongooseConnect } from '@/lib/mongoose';
 import { News } from '@/model/News';
@@ -8,7 +9,7 @@ function OneNew({ oneNew }) {
     <>
         <Header />
         <div className='mx-5'>
-          <div className='flex flex-col gap-1 rounded-md shadow-md bg-whiteblue mt-28 mx-auto container'>
+          <div className='flex flex-col gap-1 rounded-md shadow-md bg-gray-100 mt-28 mb-6 mx-auto container'>
               <div className='p-3 m-auto'>
                   <img className='object-scale-down rounded-md' src={oneNew.images[0]} alt={oneNew.title} />
               </div>
@@ -16,6 +17,7 @@ function OneNew({ oneNew }) {
               <p className='mx-5 my-3'>{oneNew.description}</p>
           </div>
         </div>
+        <Footer />
     </>
   )
 }
