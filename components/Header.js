@@ -67,19 +67,19 @@ const Header = () => {
             </Link>
             <div className={`${isScrolled ? 'h-9' : 'h-12'} w-0.5 bg-white ml-12 transition-all duration-400`}></div>
           </div>
-          <Link href={"/noticias"} className={linkStyle}>
+          <Link href={"/"} className={linkStyle}>
             Noticias
           </Link>
-          <Link href={"/tenis"} className={linkStyle}>
+          <Link href={"/"} className={linkStyle}>
             Tenis
           </Link>
-          <Link href={"/aeroclub"} className={linkStyle}>
+          <Link href={"/"} className={linkStyle}>
             AeroClub
           </Link>
-          <Link href={"/colonia"} className={linkStyle}>
+          <Link href={"/"} className={linkStyle}>
             Colonia
           </Link>
-          <Link href={"/perfil"} className={linkStyle}>
+          <Link href={"/"} className={linkStyle}>
             Perfil
           </Link>   
           {/*!isLogged && (
@@ -155,35 +155,35 @@ const Header = () => {
               Inicio
             </Link>
             <Link
-              href={"/noticias"}
+              href={"/"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
               Noticias
             </Link>
             <Link
-              href={"/tenis"}
+              href={"/"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
               Tenis
             </Link>
             <Link
-              href={"/aeroclub"}
+              href={"/"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
               AeroClub
             </Link>
             <Link
-              href={"/colonia"}
+              href={"/"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
               Colonia
             </Link>
             <Link
-              href={"/perfil"}
+              href={"/"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >

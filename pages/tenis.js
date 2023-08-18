@@ -42,22 +42,7 @@ function TennisPage() {
   return (
     <>
       <Header />
-      <div className="mt-24 mx-5 flex justify-center">
-        <button
-          onClick={handleReserveClick}
-          className="w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-        >
-          Reservar un Turno
-        </button>
-      </div>
-      <div className="mt-6 mx-5 flex justify-center">
-        <Link
-          href={"/tenis/mis_turnos"}
-          className="text-center w-full max-w-sm bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded transition duration-300 ease-in-out"
-        >
-          Mis Turnos
-        </Link>
-      </div>
+      
     </>
   );
 }
