@@ -18,7 +18,7 @@ const [news, setNews] = useState([])
   const visibleNews = news.slice(0, maxItems);
 
   return (
-        <div className='flex flex-col w-full xl:w-3/4 lg:mx-auto'>
+        <div className='flex flex-col w-full xl:w-3/4 lg:mx-auto pb-6'>
           <div className='flexContainer'>
               {visibleNews.map((n) => (
                 <NewBox key={n._id} oneNew={n}/>

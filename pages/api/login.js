@@ -8,10 +8,14 @@ export default async function handler(req, res) {
     const { documentNumber, password } = req.body;
     await mongooseConnect();
 
-    const user = await ClubUsers.findOne({ nameId: documentNumber });
+    const user = await ClubUsers.findOne({ document: documentNumber });
 
     if (!user) {
       return res.status(401).json({ message: "Usuario no encontrado." });
+    }
+
+    if (!user.validated) {
+      return res.status(404).json({ message: "Socio no validado, espera a que la administracion verifique la solicitud" });
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password);

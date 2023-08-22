@@ -20,9 +20,9 @@ function LoginPage() {
       const token = response.data.token;
       localStorage.setItem("token", token);
 
-      window.location.href = "/tenis";
+      window.location.href = "/";
     } catch (error) {
-      setMessage("Error al iniciar.");
+      setMessage(error.response.data.message);
     }
   };
 
@@ -61,7 +61,7 @@ function LoginPage() {
                 className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
                 type="submit"
               >
-                Guardar
+                Iniciar
               </button>
             </div>
           </form>

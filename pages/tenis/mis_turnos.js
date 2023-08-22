@@ -47,7 +47,7 @@ function TurnosListPage() {
         {userReservation ? (
           <div className="flex justify-center items-start h-full">
             <div className="bg-white shadow-md p-8 rounded-md w-80">
-              <h4 className="font-medium text-xl mb-3 text-center">Mi Turno</h4>
+              <h4 className="text-black font-medium text-xl mb-3 text-center">Mi Turno</h4>
               <p className="text-gray-500 text-lg text-md mb-2">
                 Fecha: <b>{date}</b>
               </p>
@@ -63,7 +63,7 @@ function TurnosListPage() {
           <div className="text-center">
             {userId ? (
               <div>
-                <h3 className="text-white font-medium text-xl mb-4">
+                <h3 className="text-black font-medium text-xl mb-4">
                   No tienes ningún turno reservado
                 </h3>
                 <Link
@@ -75,7 +75,7 @@ function TurnosListPage() {
               </div>
             ) : (
               <div>
-                <h3 className="text-white font-medium text-xl mb-4">
+                <h3 className="text-black font-medium text-xl mb-4">
                   No tienes una sesión activa
                 </h3>
                 <Link

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { isAuthenticated } from "@/lib/auth";
 
 const Header = () => {
-  //const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -22,7 +22,7 @@ const Header = () => {
     };
   }, []);
 
-  /*useEffect(() => {
+  useEffect(() => {
     setIsLogged(isAuthenticated());
   }, []);
 
@@ -34,7 +34,7 @@ const Header = () => {
     clearAuthToken();
 
     window.location.href = "/";
-  };*/
+  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -52,7 +52,7 @@ const Header = () => {
 
   return (
     <header className={headerStyle}>
-      <div className="grid grid-cols-3 w-full max-w-screen-xl mx-auto">
+      <div className="grid grid-cols-3 w-full max-w-screen-2xl mx-auto">
         <Link href={"/"} className="flex items-center ml-1">
           <img
             src="https://aeroclub-website.s3.amazonaws.com/1691463050161.jpg"
@@ -79,22 +79,19 @@ const Header = () => {
           <Link href={"/colonia"} className={linkStyle}>
             Colonia
           </Link>
-          <Link href={"/perfil"} className={linkStyle}>
-            Perfil
+          {!isLogged && (
+             <Link href={"/socios"} className={linkStyle}>
+            Socios
           </Link>   
-          {/*!isLogged && (
-            <Link href={"/iniciar"} className="text-white text-lg font-ligth">
-              Iniciar Sesión
-            </Link>
           )}
           {isLogged && (
             <button
-              className="text-white text-lg font-ligth"
+              className={linkStyle}
               onClick={handleLogout}
             >
               Cerrar Sesión
             </button>
-          ) */}
+          ) }
         </div>
       </div>
 
@@ -108,7 +105,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 text-white"
+            className="w-8 h-8 text-gray-500"
           >
             <path
               strokeLinecap="round"
@@ -182,25 +179,18 @@ const Header = () => {
             >
               Colonia
             </Link>
-            <Link
-              href={"/perfil"}
+            {!isLogged && (
+              <Link
+              href={"/socios"}
               className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
               onClick={closeMenu}
             >
-              Perfil
+              Socios
             </Link>
-            {/*!isLogged && (
-              <Link
-                href={"/iniciar"}
-                className="block py-5 w-full rounded text-center text-gray-300 text-xl"
-                onClick={closeMenu}
-              >
-                Iniciar Sesión
-              </Link>
             )}
             {isLogged && (
               <button
-                className="block py-5 w-full rounded text-center text-xl text-gray-300"
+                className="block py-5 w-full rounded text-center text-xl text-white"
                 onClick={() => {
                   closeMenu();
                   handleLogout();
@@ -208,7 +198,7 @@ const Header = () => {
               >
                 Cerrar Sesión
               </button>
-              )*/}
+              )}
           </div>
         </div>
       )}

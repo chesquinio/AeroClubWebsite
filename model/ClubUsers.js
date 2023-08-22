@@ -1,8 +1,13 @@
 const { Schema, models, model } = require("mongoose")
 
 const ClubUsersSchema = new Schema({
-    nameId: {type: String, required: true},
+    name: {type: String, required: true},
+    age: {type: String, required: true},
+    document: {type: String, required: true},
+    email: {type: String, required: true},
     password: {type: String, required: true},
+    role: {type: String, required: true},
+    validated: {type: Boolean, required: true}
 }, {
     timestamps: true,
 })

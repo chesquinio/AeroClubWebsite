@@ -1,3 +1,4 @@
+import ClubMap from "@/components/ClubMap";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import InfoClub from "@/components/InfoClub";
@@ -16,6 +17,7 @@ function HomePage() {
         </h2>
         <News maxItems={3} />
       </div>
+      <ClubMap />
       <Footer />
     </>
   );
