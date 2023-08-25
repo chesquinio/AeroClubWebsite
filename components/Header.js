@@ -79,7 +79,8 @@ const Header = () => {
           <Link href={"/colonia"} className={linkStyle}>
             Colonia
           </Link>
-          {!isLogged && (
+          
+          {/* !isLogged && (
              <Link href={"/socios"} className={linkStyle}>
             Socios
           </Link>   
@@ -91,7 +92,7 @@ const Header = () => {
             >
               Cerrar Sesión
             </button>
-          ) }
+          ) */}
         </div>
       </div>
 
@@ -133,7 +134,7 @@ const Header = () => {
       </div>
       {/* Menú desplegable en dispositivos móviles */}
       {isMenuOpen && (
-        <div className="md:hidden fixed top-0 left-0 w-full h-screen bg-ligthblue p-4 shadow-md overflow-y-auto">
+        <div className="md:hidden fixed top-0 left-0 w-full h-screen bg-white p-4 shadow-md overflow-y-auto">
           <div className="flex flex-row">
             <Link href={"/"} className="flex items-center ml-1 mt-3">
               <img
@@ -146,43 +147,43 @@ const Header = () => {
           <div className="flex flex-col justify-center items-center gap-4 mt-4">
             <Link
               href={"/"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Inicio
             </Link>
             <Link
               href={"/noticias"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Noticias
             </Link>
             <Link
               href={"/tenis"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Tenis
             </Link>
             <Link
               href={"/aeroclub"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               AeroClub
             </Link>
             <Link
               href={"/colonia"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Colonia
             </Link>
-            {!isLogged && (
+            {/* !isLogged && (
               <Link
               href={"/socios"}
-              className="block py-2 w-full rounded text-center text-xl text-white hover:bg-moreligthblue transition"
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Socios
@@ -190,7 +191,7 @@ const Header = () => {
             )}
             {isLogged && (
               <button
-                className="block py-5 w-full rounded text-center text-xl text-white"
+                className="block py-5 w-full rounded text-center text-xl text-gray-600"
                 onClick={() => {
                   closeMenu();
                   handleLogout();
@@ -198,7 +199,7 @@ const Header = () => {
               >
                 Cerrar Sesión
               </button>
-              )}
+              ) */}
           </div>
         </div>
       )}
