@@ -21,6 +21,7 @@ module.exports = {
           whiteblue: '#F8F8F8',
           dark: '#000000A4',
           moredark: '#272727',
+          specialGray: '#808080',
       },
       fontFamily: {
         custom: ["Poppins", "sans"],

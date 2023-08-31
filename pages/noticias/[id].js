@@ -1,39 +1,102 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header'
-import { mongooseConnect } from '@/lib/mongoose';
-import { News } from '@/model/News';
+"use client"
+import React, { useState, useEffect } from "react";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { mongooseConnect } from "@/lib/mongoose";
+import { News } from "@/model/News";
+import { Carousel } from "react-responsive-carousel";
 
 function OneNew({ oneNew }) {
-    
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showIndicators, setShowIndicators] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    window.addEventListener('resize', updateShowIndicators);
+
+    return () => {
+      window.removeEventListener('resize', updateShowIndicators);
+    };
+  }, []);
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % oneNew.images.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + oneNew.images.length) % oneNew.images.length
+    );
+  };
+
+  const updateShowIndicators = () => {
+    setShowIndicators(window.innerWidth <= 768);
+  };
+
   return (
     <>
-        <Header />
-        <div className='mx-5'>
-          <div className='flex flex-col gap-1 rounded-md shadow-md bg-white mt-28 mb-6 mx-auto container'>
-              <div className='p-3 m-auto'>
-                  <img className='object-scale-down rounded-md' src={oneNew.images[0]} alt={oneNew.title} />
+      <Header />
+      <div className="min-h-screen mx-5">
+        <div className="flex flex-col gap-1 rounded-md shadow-md bg-white mt-28 mb-6 mx-auto container relative">
+          <Carousel
+            showThumbs={false}
+            showStatus={false}
+            showArrows={false}
+            showIndicators={showIndicators}
+            selectedItem={currentIndex}
+          >
+            {oneNew.images.map((image, index) => (
+              <div key={index} className="p-3 m-auto">
+                <img
+                  className="object-scale-down rounded-md"
+                  src={image}
+                  alt={oneNew.title}
+                />
+                {currentIndex > 0 && (
+                  <button
+                    className=" hidden md:inline absolute left-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-ligthblue hover:bg-moreligthblue transition-all rounded-full  px-2 py-1"
+                    onClick={prevSlide}
+                  >
+                    <p className="pr-0.5 pt-0.5">
+                      <i className="bx bx-chevrons-left"></i>
+                    </p>
+                  </button>
+                )}
+                {currentIndex < oneNew.images.length - 1 && (
+                  <button
+                    className="hidden md:inline absolute right-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-ligthblue hover:bg-moreligthblue transition-all rounded-full px-2 py-1"
+                    onClick={nextSlide}
+                  >
+                    <p className="pl-0.5 pt-0.5">
+                      <i className="bx bx-chevrons-right"></i>
+                    </p>
+                  </button>
+                )}
               </div>
-              <h3 className='title font-medium mx-5 mt-3'>{oneNew.title}</h3>
-              <p className='mx-5 my-3'>{oneNew.description}</p>
-          </div>
+            ))}
+          </Carousel>
+
+          <h3 className="title font-medium mx-5 mt-3">{oneNew.title}</h3>
+          <p className="mx-5 my-3">{oneNew.description}</p>
         </div>
-        <Footer />
+      </div>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default OneNew
+export default OneNew;
 
 export async function getServerSideProps(context) {
-    const id = context.params.id;
-    await mongooseConnect()
+  const id = context.params.id;
+  await mongooseConnect();
 
-    const oneNew = await News.findOne({_id: id});
-    const serializedOneNew = JSON.parse(JSON.stringify(oneNew));
+  const oneNew = await News.findOne({ _id: id });
+  const serializedOneNew = JSON.parse(JSON.stringify(oneNew));
 
-    return {
-        props: {
-          oneNew: serializedOneNew,
-        },
-    };
+  return {
+    props: {
+      oneNew: serializedOneNew,
+    },
+  };
 }
