@@ -36,7 +36,7 @@ function OneNew({ oneNew }) {
   return (
     <>
       <Header />
-      <div className="min-h-screen mx-5">
+      <div className="min-h-screen mx-5 lazy-load">
         <div className="flex flex-col gap-1 rounded-md shadow-md bg-white mt-28 mb-6 mx-auto container relative">
           <Carousel
             showThumbs={false}
@@ -48,26 +48,26 @@ function OneNew({ oneNew }) {
             {oneNew.images.map((image, index) => (
               <div key={index} className="p-3 m-auto">
                 <img
-                  className="object-scale-down rounded-md"
+                  className="object-cover rounded-md"
                   src={image}
                   alt={oneNew.title}
                 />
                 {currentIndex > 0 && (
                   <button
-                    className=" hidden md:inline absolute left-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-ligthblue hover:bg-moreligthblue transition-all rounded-full  px-2 py-1"
+                    className=" hidden md:inline absolute left-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-moreblue hover:bg-cyan-700 transition-all rounded-full  px-2 py-1"
                     onClick={prevSlide}
                   >
-                    <p className="pr-0.5 pt-0.5">
+                    <p className="pr-0.5 pt-1">
                       <i className="bx bx-chevrons-left"></i>
                     </p>
                   </button>
                 )}
                 {currentIndex < oneNew.images.length - 1 && (
                   <button
-                    className="hidden md:inline absolute right-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-ligthblue hover:bg-moreligthblue transition-all rounded-full px-2 py-1"
+                    className="hidden md:inline absolute right-8 top-1/2 transform -translate-y-1/2 text-3xl text-white bg-moreblue hover:bg-cyan-700 transition-all rounded-full px-2 py-1"
                     onClick={nextSlide}
                   >
-                    <p className="pl-0.5 pt-0.5">
+                    <p className="pl-0.5 pt-1">
                       <i className="bx bx-chevrons-right"></i>
                     </p>
                   </button>

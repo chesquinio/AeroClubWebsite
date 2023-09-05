@@ -1,53 +1,73 @@
 import { Carousel } from "react-responsive-carousel";
+import { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import TextLimit from "./TextLimit";
 
 function MainPage() {
-  const [newImages, setNewImages] = useState([]);
+  const [scrolling, setScrolling] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get("/api/news")
-      .then((response) => {
-        setNewImages(response.data);
-      })
-      .catch((error) => {
-        console.error("Error al obtener las imágenes:", error);
-      });
-  }, []);
+  const images = [
+    {
+      image: "/imagenPrincipal1.png",
+      title: "AERO CLUB DE RAFAELA",
+      description: "Un Club Social",
+    },
+    {
+      image: "/imagenPrincipal2.png",
+      title: "DIVERSIDAD DE ACTIVIDADES",
+      description: "Siempre en Movimiento",
+    },
+  ];
 
-  const visibleImages = newImages.slice(0, 5);
+  const handleScroll = () => {
+    const nextPage = document.getElementById("next-page");
+    if (nextPage) {
+      nextPage.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <div className="mt-20 w-full flex items-center justify-center bg-gray-100">
+    <div className="w-full flex items-center justify-center bg-white">
       <div className="w-full mx-auto">
-        <Carousel
-          showArrows={false}
-          showStatus={false}
-          showThumbs={false}
-          autoPlay
-          infiniteLoop
-        >
-          {visibleImages.map((newImag, index) => (
-            <div key={index} className="overflow-hidden">
-              <img
-                className="w-full carouselHeigth object-cover"
-                src={newImag.images[0]}
-                alt={`Imagen ${index}`}
-              />
-              <div className="absolute bottom-0 right-0 left-0 px-4 pt-4 pb-8 bg-dark">
-                <h4 className=" text-white  text-4xl font-light">
-                  {newImag.title}
-                </h4>
-                <div className="text-white text-lg font-normal">
-                  <TextLimit text={newImag.description} maxWords={15} />
+        <div className="w-full h-screen relative lazy-load">
+          <Carousel
+            showArrows={false}
+            showStatus={false}
+            showThumbs={false}
+            infiniteLoop
+          >
+            {images.map((img, index) => (
+              <div key={index} className="relative overflow-hidden">
+                <img
+                  className="w-full h-screen object-cover"
+                  src={img.image}
+                  alt={`Imagen ${index}`}
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-opacity-75 backdrop-blur-md p-8 text-white">
+                  <h4
+                    className="text-4xl md:text-5xl font-light mb-2"
+                    style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                  >
+                    {img.title}
+                  </h4>
+                  <p
+                    className="text-4xl font-light italic"
+                    style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                  >
+                    {img.description}
+                  </p>
                 </div>
               </div>
+            ))}
+          </Carousel>
+          <div
+            className={`absolute text-white text-4xl bottom-16 left-1/2 transform -translate-x-1/2 hover:translate-y-1/2 cursor-pointer transition-transform duration-500`}
+            onClick={handleScroll}
+          >
+            <div className="border-2 border-white rounded-full px-2 pt-2 pb-1">
+              <i className="bx bx-chevrons-down"></i>
             </div>
-          ))}
-        </Carousel>
+          </div>
+        </div>
       </div>
     </div>
   );

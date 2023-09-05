@@ -55,7 +55,7 @@ const Header = () => {
       <div className="grid grid-cols-3 w-full max-w-screen-2xl mx-auto">
         <Link href={"/"} className="flex items-center ml-1">
           <img
-            src="https://aeroclub-website.s3.amazonaws.com/1691463050161.jpg"
+            src="https://aeroclub-website.s3.amazonaws.com/1693577423224.png"
             alt="Logo"
             className="rounded-md w-10"
           />
@@ -70,11 +70,11 @@ const Header = () => {
           <Link href={"/noticias"} className={linkStyle}>
             Noticias
           </Link>
+          <Link href={"/aeronautica"} className={linkStyle}>
+            Aeronáutica
+          </Link>
           <Link href={"/tenis"} className={linkStyle}>
             Tenis
-          </Link>
-          <Link href={"/aeroclub"} className={linkStyle}>
-            AeroClub
           </Link>
           <Link href={"/colonia"} className={linkStyle}>
             Colonia
@@ -138,7 +138,7 @@ const Header = () => {
           <div className="flex flex-row">
             <Link href={"/"} className="flex items-center ml-1 mt-3">
               <img
-                src="https://aeroclub-website.s3.amazonaws.com/1691463050161.jpg"
+                src="https://aeroclub-website.s3.amazonaws.com/1693577423224.png"
                 alt="Logo"
                 className="rounded-md w-10"
               />
@@ -160,18 +160,18 @@ const Header = () => {
               Noticias
             </Link>
             <Link
+              href={"/aeronautica"}
+              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
+              onClick={closeMenu}
+            >
+              Aeronáutica
+            </Link>
+            <Link
               href={"/tenis"}
               className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
               onClick={closeMenu}
             >
               Tenis
-            </Link>
-            <Link
-              href={"/aeroclub"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              AeroClub
             </Link>
             <Link
               href={"/colonia"}
