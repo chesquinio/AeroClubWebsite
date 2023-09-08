@@ -122,7 +122,7 @@ const Header = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-8 h-8 text-black"
+            className="w-8 h-8 text-gray-500"
           >
             <path
               strokeLinecap="round"
@@ -144,42 +144,67 @@ const Header = () => {
               />
             </Link>
           </div>
-          <div className="flex flex-col justify-center items-center gap-4 mt-4">
-            <Link
-              href={"/"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              Inicio
-            </Link>
-            <Link
-              href={"/noticias"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              Noticias
-            </Link>
-            <Link
-              href={"/aeronautica"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              Aeronáutica
-            </Link>
-            <Link
-              href={"/tenis"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              Tenis
-            </Link>
-            <Link
-              href={"/colonia"}
-              className="block py-2 w-full rounded text-center text-xl text-gray-600 hover:bg-gray-100 transition"
-              onClick={closeMenu}
-            >
-              Colonia
-            </Link>
+          <div className="flex flex-col gap-4 mt-4">
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <Link
+                href={"/"}
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Inicio
+              </Link>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class='bx bx-plus'></i>
+              </div>
+            </div>
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <Link
+                href={"/noticias"}
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Noticias
+              </Link>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class='bx bx-plus'></i>
+              </div>
+            </div>
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <Link
+                href={"/aeronautica"}
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Aeronáutica
+              </Link>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class='bx bx-plus'></i>
+              </div>
+            </div>
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <Link
+                href={"/tenis"}
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Tenis
+              </Link>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class='bx bx-plus'></i>
+              </div>
+            </div>
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <Link
+                href={"/colonia"}
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Colonia
+              </Link>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class='bx bx-plus'></i>
+              </div>
+            </div>
             {/* !isLogged && (
               <Link
               href={"/socios"}

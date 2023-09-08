@@ -2,12 +2,39 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { mongooseConnect } from "@/lib/mongoose";
 import { AeroClubData } from "@/model/AeroClubData";
+import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 
 function AeroclubPage({ aeroclubData }) {
   return (
     <>
+      <Head>
+        <title>Aeronáutica | Aero Club Rafaela</title>
+        <meta
+          name="description"
+          content="La actividad más importante del Aero Club es la aeronáutica, atrayendo a muchos socios."
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+      </Head>
       <Header />
       <div className="lazy-load">
         <div
@@ -23,12 +50,17 @@ function AeroclubPage({ aeroclubData }) {
             className="flex justify-center items-center h-full"
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
           >
-            <h2 className="text-white text-4xl md:text-5xl">Aeronáutica</h2>
+            <h2
+              className="text-white text-4xl md:text-5xl"
+              style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+            >
+              Aeronáutica
+            </h2>
           </div>
         </div>
         <div>
           <div>
-            <div className="flex flex-col lg:flex-row my-8 mx-4 lg:mx-auto max-w-7xl ">
+            <div className="flex flex-col lg:flex-row my-8 mx-4 lg:mx-auto max-w-7xl">
               <div className="bg-gray-300 h-52 w-11/12 sm:w-4/5 sm:h-60 md:w-2/3 lg:w-1/3 md:h-72 lg:mx-12 lg:mt-10 rounded-md mx-auto flex justify-center items-center">
                 <img
                   src={aeroclubData[0].primaryImage}
@@ -44,17 +76,30 @@ function AeroclubPage({ aeroclubData }) {
               </div>
             </div>
           </div>
-          {aeroclubData[0].activeBotton && (
-            <div className="flex justify-center mt-3">
-              <Link
-                href={"/aeroclub/reservas"}
-                className="bg-moreblue py-2 px-3 rounded text-white"
+          {/*aeroclubData[0].activeBotton && (
+            <div
+              className="h-64 mt-20"
+              style={{
+                backgroundImage: "url('/avion2.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div
+                className="flex justify-center items-center h-full backdrop-blur-sm"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
               >
-                {aeroclubData[0].textBotton}
-              </Link>
+                <Link
+                  href={"/aeronautica/reservas"}
+                  className="text-white md:text-gray-200 text-2xl md:text-3xl py-2 px-4 border-2 border-opacity-100 md:border-opacity-0 hover:text-white hover:border-opacity-100 border-white transition-all duration-500"
+                  style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                >
+                  {aeroclubData[0].textBotton}
+                </Link>
+              </div>
             </div>
-          )}
-          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-24 md:mx-auto md:px-5 mb-4">
+          )*/}
+          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-20 md:mx-auto md:px-5 mb-4">
             <h4 className="font-light text-3xl my-2">Historia</h4>
             <div className="flex flex-col md:flex-row mb-8">
               <p className="md:w-2/3 md:pr-8">
@@ -96,34 +141,42 @@ function AeroclubPage({ aeroclubData }) {
                 Tomahawk, un Cessna 172N Skyhawk II y un Cessna R172K Hawk XP
                 II, los cuales son utilizados tanto por la escuela de pilotos
                 del Aero Club como para vuelos de traslado en general. Con
-                respecto a sus instalaciones, cuenta con dos
-                pistas de tierra de 1100 metros cada una, una de ellas con
-                servicio de balizamiento para vuelo nocturno y una pista de
-                hormigón de 1375 metros también habilitada para vuelo nocturno y
-                con un sistema indicador de trayectoria de aproximación de
-                precisión, con calles de rodaje y plataformas balizadas e
-                iluminadas, taller de mantenimiento aeronáutico, una sala de
-                pilotos, tres hangares, secretaría, torre de control, maquinaria
-                y personal de conservación de campo y abastecimiento de
-                combustible, distante cuatro kilómetros al sur de la ciudad.
+                respecto a sus instalaciones, cuenta con dos pistas de tierra de
+                1100 metros cada una, una de ellas con servicio de balizamiento
+                para vuelo nocturno y una pista de hormigón de 1375 metros
+                también habilitada para vuelo nocturno y con un sistema
+                indicador de trayectoria de aproximación de precisión, con
+                calles de rodaje y plataformas balizadas e iluminadas, taller de
+                mantenimiento aeronáutico, una sala de pilotos, tres hangares,
+                secretaría, torre de control, maquinaria y personal de
+                conservación de campo y abastecimiento de combustible, distante
+                cuatro kilómetros al sur de la ciudad.
               </p>
             </div>
           </div>
         </div>
-        <div
-          className="my-10 h-60 relative"
-          style={{
-            backgroundImage: "url('/avion.jpg')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundAttachment: "fixed",
-          }}
-        >
+        <div className="my-10 h-60 bg-black relative">
           <div
-            className="flex justify-center items-center h-full"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            className="h-full"
+            style={{
+              backgroundImage: "url('/avion.jpg')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundAttachment: "fixed",
+            }}
           >
-            <h2 className="text-white text-2xl md:text-3xl">Planes de Enseñansa</h2>
+            <div
+              className="flex justify-center items-center h-full backdrop-blur-sm"
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+            >
+              <Link
+                href={"/aeronautica/carreras"}
+                className="text-white md:text-gray-200 text-2xl md:text-3xl py-2 px-4 border-2 border-opacity-100 md:border-opacity-0 hover:text-white hover:border-opacity-100 border-white transition-all duration-500"
+                style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+              >
+                Planes de Enseñansa
+              </Link>
+            </div>
           </div>
         </div>
         <Footer />

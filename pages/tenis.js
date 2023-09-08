@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { TennisData } from "@/model/TennisData";
 import { mongooseConnect } from "@/lib/mongoose";
 import Link from "next/link";
+import Head from "next/head";
 //import axios from "axios";
 //import jwtDecode from "jwt-decode";
 
@@ -46,6 +47,18 @@ function TennisPage({ tennisData }) {
 
   return (
     <>
+      <Head>
+        <title>Tenis | Aero Club Rafaela</title>
+        <meta
+          name="description"
+          content="Las instalaciones cuentan con seis canchas de tenis de polvo de ladrillo, tres de ellas iluminadas."
+        />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+      </Head>
       <Header />
       <div className="lazy-load">
         <div
@@ -62,7 +75,7 @@ function TennisPage({ tennisData }) {
             className="flex justify-center items-center h-full"
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
           >
-            <h2 className="text-white text-4xl md:text-5xl">Tenis</h2>
+            <h2 className="text-white text-4xl md:text-5xl" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Tenis</h2>
           </div>
         </div>
         {/*
@@ -102,17 +115,30 @@ function TennisPage({ tennisData }) {
               </div>
             </div>
           </div>
-          {tennisData[0].activeBotton && (
-            <div className="flex justify-center mt-3">
-              <Link
-                href={"/tenis/inscripciones"}
-                className="bg-moreblue py-2 px-3 rounded text-white"
+          {/*tennisData[0].activeBotton && (
+            <div
+              className="h-64 mt-20"
+              style={{
+                backgroundImage: "url('/tenis2.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            >
+              <div
+                className="flex justify-center items-center h-full backdrop-blur-sm"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
               >
-                {tennisData[0].textBotton}
-              </Link>
+                <Link
+                  href={"/tenis/inscripciones"}
+                  className="text-white md:text-gray-200 text-2xl md:text-3xl py-2 px-4 border-2 border-opacity-100 md:border-opacity-0 hover:text-white hover:border-opacity-100 border-white transition-all duration-500"
+                  style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+                >
+                  {tennisData[0].textBotton}
+                </Link>
+              </div>
             </div>
-          )}
-          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-24 md:mx-auto md:px-5 mb-4">
+          )*/}
+          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-20 md:mx-auto md:px-5 mb-4">
             <h4 className="font-light text-3xl my-2">Historia</h4>
             <div className="flex flex-col md:flex-row mb-8">
               <p className="md:w-2/3 md:pr-8">

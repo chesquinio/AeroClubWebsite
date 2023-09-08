@@ -33,6 +33,12 @@ function OneNew({ oneNew }) {
     setShowIndicators(window.innerWidth <= 768);
   };
 
+  const date = new Date(oneNew.createdAt).toLocaleDateString('es-ES', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+
   return (
     <>
       <Header />
@@ -46,9 +52,9 @@ function OneNew({ oneNew }) {
             selectedItem={currentIndex}
           >
             {oneNew.images.map((image, index) => (
-              <div key={index} className="p-3 m-auto">
+              <div key={index} className="p-3 h-full w-full">
                 <img
-                  className="object-cover rounded-md"
+                  className="object-cover w-full h-full rounded-md"
                   src={image}
                   alt={oneNew.title}
                 />
@@ -78,6 +84,9 @@ function OneNew({ oneNew }) {
 
           <h3 className="title font-medium mx-5 mt-3">{oneNew.title}</h3>
           <p className="mx-5 my-3">{oneNew.description}</p>
+          <div className="flex justify-end m-5">
+            <p className="text-gray-500 text-md font-light">{date}</p>
+          </div>
         </div>
       </div>
       <Footer />

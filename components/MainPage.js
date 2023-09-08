@@ -1,9 +1,9 @@
 import { Carousel } from "react-responsive-carousel";
-import { useState } from "react";
+import { useRef } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function MainPage() {
-  const [scrolling, setScrolling] = useState(false);
+  const carouselRef = useRef(null);
 
   const images = [
     {
@@ -19,9 +19,8 @@ function MainPage() {
   ];
 
   const handleScroll = () => {
-    const nextPage = document.getElementById("next-page");
-    if (nextPage) {
-      nextPage.scrollIntoView({ behavior: "smooth" });
+    if (carouselRef.current) {
+      carouselRef.current.next();
     }
   };
 
@@ -33,7 +32,11 @@ function MainPage() {
             showArrows={false}
             showStatus={false}
             showThumbs={false}
+            autoPlay={true}
+            interval={10000}
             infiniteLoop
+            swipeable={false}
+            ref={carouselRef}
           >
             {images.map((img, index) => (
               <div key={index} className="relative overflow-hidden">
