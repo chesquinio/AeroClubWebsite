@@ -19,8 +19,9 @@ function MainPage() {
   ];
 
   const handleScroll = () => {
-    if (carouselRef.current) {
-      carouselRef.current.next();
+    const nextPage = document.getElementById("next-page");
+    if (nextPage) {
+      nextPage.scrollIntoView({ behavior: "smooth" });
     }
   };
 
