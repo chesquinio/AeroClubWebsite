@@ -176,7 +176,7 @@ function CampingForm({ campingData }) {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Inscripcion a la Colonia
+            Inscripción a la Colonia
           </h2>
           <h3 className="text-lg mb-2">Datos Personales:</h3>
           <div className="flex flex-col md:flex-row gap-3 mb-4">
