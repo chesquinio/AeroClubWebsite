@@ -76,8 +76,8 @@ const Header = () => {
           <Link href={"/tenis"} className={linkStyle}>
             Tenis
           </Link>
-          <Link href={"/colonia"} className={linkStyle}>
-            Colonia
+          <Link href={"/parque"} className={linkStyle}>
+            Parque
           </Link>
           
           {/* !isLogged && (
@@ -195,11 +195,11 @@ const Header = () => {
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
               <Link
-                href={"/colonia"}
+                href={"/parque"}
                 className="block py-2 w-full text-xl text-gray-600 ml-5"
                 onClick={closeMenu}
               >
-                Colonia
+                Parque
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
                 <i class='bx bx-plus'></i>

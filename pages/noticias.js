@@ -13,11 +13,6 @@ function NewPage() {
             name="description"
             content="Las últimas novedades que ha presentado el club para sus socios y afiliados en pos de un progreso de las instalaciones y los servicios ofrecidos."
           />
-          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-          <link rel="manifest" href="/site.webmanifest"/>
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"/>
         </Head>
         <Header />
         <div className='min-h-screen mt-24 mb-6'>

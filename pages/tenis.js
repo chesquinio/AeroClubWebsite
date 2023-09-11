@@ -53,19 +53,13 @@ function TennisPage({ tennisData }) {
           name="description"
           content="Las instalaciones cuentan con seis canchas de tenis de polvo de ladrillo, tres de ellas iluminadas."
         />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       </Head>
       <Header />
       <div className="lazy-load">
         <div
           className="mt-24 h-40 relative"
           style={{
-            backgroundImage:
-              "url('/tenis.jpg')",
+            backgroundImage: "url('/tenis.jpg')",
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundAttachment: "fixed",
@@ -75,7 +69,12 @@ function TennisPage({ tennisData }) {
             className="flex justify-center items-center h-full"
             style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
           >
-            <h2 className="text-white text-4xl md:text-5xl" style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}>Tenis</h2>
+            <h2
+              className="text-white text-4xl md:text-5xl"
+              style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
+            >
+              Tenis
+            </h2>
           </div>
         </div>
         {/*
@@ -107,7 +106,7 @@ function TennisPage({ tennisData }) {
                   alt={tennisData[0].primaryTitle}
                 />
               </div>
-              <div className="text-center lg:text-left mt-8 lg:w-2/3">
+              <div className="text-center lg:text-left mt-8 md:mt-16 lg:w-2/3">
                 <h3 className="font-light text-3xl mb-4">
                   {tennisData[0].primaryTitle}
                 </h3>
@@ -138,47 +137,59 @@ function TennisPage({ tennisData }) {
               </div>
             </div>
           )*/}
-          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-20 md:mx-auto md:px-5 mb-4">
-            <h4 className="font-light text-3xl my-2">Historia</h4>
+          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-16 md:mt-20 md:mx-auto md:px-5 mb-4">
+            <h4 className="font-light text-3xl my-2">Clases de Tenis</h4>
             <div className="flex flex-col md:flex-row mb-8">
               <p className="md:w-2/3 md:pr-8">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Praesentium eius libero cum rem! Eos corrupti commodi
-                repudiandae, rem vel quidem debitis cupiditate optio? Voluptatum
-                ex nesciunt repellat magnam nihil perspiciatis, repellendus
-                minus inventore asperiores sapiente nobis qui neque dolore
-                voluptas illo porro debitis quo doloribus commodi soluta
-                molestiae ea dolorum sed? Adipisci, minima praesentium quisquam,
-                dolores, asperiores facere aperiam magnam laudantium similique
-                voluptate natus odit commodi suscipit! Eaque ad consequatur
-                minus consequuntur architecto delectus. Quas, corrupti officia a
-                repellendus, esse ab obcaecati, cupiditate minus laboriosam
-                dicta laborum repudiandae soluta rerum dolores iure explicabo
-                quos veniam perferendis illum sint. Quo, atque?
+                En el Aero Club, nos enorgullecemos de brindar diversas
+                oportunidades para sumergirse en el mundo del tenis. Contamos
+                con un equipo de profesores que imparten clases al público de
+                todas las edades, desde los más jóvenes ansiosos por dar sus
+                primeros pasos en la cancha hasta adultos que desean
+                perfeccionar sus habilidades y disfrutar del juego. Nuestra
+                escuelita de tenis, donde realizamos actividad constante y
+                entusiasta, acoge a numerosos chicos y chicas con ganas de
+                aprender a jugar mientras se divierten. Además, nuestras clases
+                para adultos han demostrado ser una opción sumamente popular,
+                atrayendo a aquellos que sienten una afinidad por este deporte
+                dinámico. En definitiva, en el Aero Club, no solo promovemos la
+                enseñanza del tenis, sino que también creamos un ambiente
+                inclusivo y estimulante donde jugadores de todas las edades
+                pueden desarrollar sus habilidades y compartir su pasión por
+                este deporte.
               </p>
               <div className="md:w-1/3 bg-gray-300 h-52 w-11/12 sm:w-4/5 sm:h-60 rounded mx-auto mt-5 md:my-0 flex justify-center items-center">
-                Imagen
+                <img
+                  className="object-cover h-full w-full rounded"
+                  src="https://aeroclub-website.s3.amazonaws.com/1694443231041.png"
+                  alt="Pelota de tenis"
+                />
               </div>
             </div>
             <div className="h-px bg-gray-600 md:hidden"></div>
             <div className="flex flex-col md:flex-row mb-8">
-              <div className="md:w-1/3 bg-gray-300 h-52 w-11/12 sm:w-4/5 sm:h-60 rounded mx-auto my-7 md:my-0 flex justify-center items-center">
-                Imagen
+              <div className="md:w-1/3 bg-transparent h-52 w-11/12 sm:w-4/5 sm:h-60 rounded mx-auto my-7 md:my-0 flex justify-center items-center">
+                <img
+                  className="object-cover h-full w-full rounded"
+                  src="https://aeroclub-website.s3.amazonaws.com/1694442845646.png"
+                  alt="Canchas de tenis"
+                />
               </div>
               <p className="md:w-2/3 md:pl-8">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-                eligendi minima laborum! Sequi, ratione. Dignissimos voluptatem
-                totam ipsa qui veniam nisi adipisci, obcaecati laborum
-                consectetur repellat autem nulla, vero assumenda et amet
-                accusantium. Nam est delectus facilis nisi repellendus
-                recusandae voluptatum? Eligendi fugiat error nobis impedit
-                veritatis laboriosam repudiandae, magni similique minus eum
-                omnis perferendis, ut eveniet dolorem nisi labore voluptates
-                fugit quod. Sed eligendi ut labore, numquam maiores fugit culpa
-                nemo, aspernatur velit saepe rerum distinctio voluptatem
-                dignissimos mollitia! Facere eius, ullam quam reiciendis
-                aperiam, itaque odit laudantium sequi at molestiae quia eligendi
-                nemo recusandae saepe quae tempore. Pariatur.
+                El club se enorgullece de fomentar un espíritu competitivo entre
+                sus miembros al organizar regularmente torneos de dobles que
+                cubren todas las categorías y niveles de habilidad en el tenis.
+                Estos apasionantes encuentros no solo ofrecen una oportunidad
+                invaluable para los jugadores de perfeccionar sus habilidades y
+                estrategias, sino que también contribuyen significativamente a
+                consolidar la reputación del club como un epicentro del tenis en
+                la ciudad. La emoción y la intensidad que caracterizan estos
+                torneos atraen a jugadores de diversos lugares, quienes no solo
+                visitan el club para competir, sino también para experimentar el
+                ambiente acogedor que lo distingue. Así, el Aero Club se erige
+                como un lugar de encuentro para los amantes del tenis,
+                fortaleciendo la comunidad deportiva y atrayendo a entusiastas
+                de este apasionante deporte de todas partes.
               </p>
             </div>
           </div>

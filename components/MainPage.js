@@ -47,24 +47,24 @@ function MainPage() {
                   alt={`Imagen ${index}`}
                 />
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center bg-opacity-75 backdrop-blur-md p-8 text-white">
-                  <h4
+                  <h2
                     className="text-4xl md:text-5xl font-light mb-2"
                     style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
                   >
                     {img.title}
-                  </h4>
-                  <p
+                  </h2>
+                  <h3
                     className="text-4xl font-light italic"
                     style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
                   >
                     {img.description}
-                  </p>
+                  </h3>
                 </div>
               </div>
             ))}
           </Carousel>
           <div
-            className={`absolute text-white text-4xl bottom-16 left-1/2 transform -translate-x-1/2 hover:translate-y-1/2 cursor-pointer transition-transform duration-500`}
+            className={`absolute text-white text-4xl bottom-20 md:bottom-16 left-1/2 transform -translate-x-1/2 hover:translate-y-1/4 cursor-pointer transition-transform duration-500`}
             onClick={handleScroll}
           >
             <div className="border-2 border-white rounded-full px-2 pt-2 pb-1">

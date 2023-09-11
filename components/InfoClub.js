@@ -17,11 +17,11 @@ function InfoClub() {
       href: "/tenis",
     },
     {
-      title: "Colonia",
-      image: "/colonia.png",
+      title: "Parque",
+      image: "/parque.png",
       description:
         "Las piletas son una de las principales actividades junto al gran espacio verde que dispone el club...",
-      href: "/colonia",
+      href: "/parque",
     },
   ];
 

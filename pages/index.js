@@ -4,10 +4,14 @@ import Header from "@/components/Header";
 import InfoClub from "@/components/InfoClub";
 import MainPage from "@/components/MainPage";
 import News from "@/components/News";
+import Head from "next/head";
 
 function HomePage() {
   return (
     <>
+      <Head>
+        <title>Aero Club Rafaela</title>
+      </Head>
       <Header />
       <MainPage />
       <InfoClub />

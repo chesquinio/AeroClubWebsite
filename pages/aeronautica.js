@@ -15,25 +15,6 @@ function AeroclubPage({ aeroclubData }) {
           name="description"
           content="La actividad más importante del Aero Club es la aeronáutica, atrayendo a muchos socios."
         />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
       </Head>
       <Header />
       <div className="lazy-load">
@@ -68,7 +49,7 @@ function AeroclubPage({ aeroclubData }) {
                   alt={aeroclubData[0].primaryTitle}
                 />
               </div>
-              <div className="text-center lg:text-left mt-8 lg:w-2/3">
+              <div className="text-center lg:text-left mt-8 md:mt-16 lg:w-2/3">
                 <h3 className="font-light text-3xl mb-4">
                   {aeroclubData[0].primaryTitle}
                 </h3>
@@ -99,7 +80,7 @@ function AeroclubPage({ aeroclubData }) {
               </div>
             </div>
           )*/}
-          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-10 md:mt-20 md:mx-auto md:px-5 mb-4">
+          <div className="flex flex-col gap-6 max-w-7xl mx-5 mt-16 md:mt-20 md:mx-auto md:px-5 mb-4">
             <h4 className="font-light text-3xl my-2">Historia</h4>
             <div className="flex flex-col md:flex-row mb-8">
               <p className="md:w-2/3 md:pr-8">
@@ -155,7 +136,7 @@ function AeroclubPage({ aeroclubData }) {
             </div>
           </div>
         </div>
-        <div className="my-10 h-60 bg-black relative">
+        <div className="my-16 h-60 bg-black relative">
           <div
             className="h-full"
             style={{
@@ -170,11 +151,11 @@ function AeroclubPage({ aeroclubData }) {
               style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
             >
               <Link
-                href={"/aeronautica/carreras"}
+                href={"/aeronautica/aviones"}
                 className="text-white md:text-gray-200 text-2xl md:text-3xl py-2 px-4 border-2 border-opacity-100 md:border-opacity-0 hover:text-white hover:border-opacity-100 border-white transition-all duration-500"
                 style={{ textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)" }}
               >
-                Planes de Enseñansa
+                Aviones
               </Link>
             </div>
           </div>
