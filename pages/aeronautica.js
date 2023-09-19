@@ -529,7 +529,7 @@ function AeroclubPage({ aeroclubData }) {
                       haber finalizado el curso se le reconocerá el 50% de sus
                       horas voladas por un período extra no mayor a 2 años, para
                       que obtenga su licencia. Pasado dicho período perderá el
-                      total de las horas.
+                      total de las horas
                     </p>
                   </div>
                 )}
