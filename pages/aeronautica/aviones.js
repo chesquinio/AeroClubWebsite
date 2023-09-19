@@ -56,7 +56,7 @@ function PlanesPage() {
         <title>Aviones | Aero Club Rafaela</title>
       </Head>
       <Header />
-      <div className="flex flex-col mx-auto lg:grid lg:grid-cols-3 mt-20 mb-11 text-white gap-10 lg:gap-0 sm:w-2/3 lg:w-full xl:w-4/5 lg:mx-auto">
+      <div className="flex flex-col mx-auto lg:grid lg:grid-cols-3 mt-20 mb-11 text-white gap-10 lg:gap-0 sm:w-2/3 lg:w-full xl:w-4/5 lg:mx-auto lazy-load">
         {planes.map((plane, index) => (
           <div
             key={index}

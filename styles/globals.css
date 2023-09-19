@@ -37,6 +37,11 @@ body {
   animation: fadeIn 2s; /* Animación de fadeIn */
 }
 
+.more-lazy-load {
+  background: transparent; /* Fondo blanco */
+  animation: fadeIn 3s; /* Animación de fadeIn */
+}
+
 .text-xxs {
   font-size: 6px;
 }
