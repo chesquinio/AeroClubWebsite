@@ -55,6 +55,7 @@ function CampingForm({ campingData }) {
   const [certificadoMedico, setCertificadoMedico] = useState(null);
   const [bucoDental, setBucoDental] = useState(null);
   const [message, setMessage] = useState(null);
+  const [errors, setErrors] = useState({});
   const router = useRouter();
 
   useEffect(() => {
@@ -100,6 +101,75 @@ function CampingForm({ campingData }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    const requiredFields = [
+      "nombre",
+      "apellido",
+      "documento",
+      "fechaNacimiento",
+      "domicilio",
+      "localidad",
+      "telefonoEmergencia",
+      "celular",
+      "email",
+      "obraSocial",
+      "medicoCabecera",
+      "grupoSanguineo",
+    ];
+    const newErrors = {};
+
+    requiredFields.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = "Este campo es requerido";
+      }
+    });
+
+    if (
+      formData.alergicoMedicamentos === "si" &&
+      !formData.alergicoMedicamentosCual
+    ) {
+      newErrors.alergicoMedicamentosCual = "Este campo es requerido";
+    }
+
+    if (formData.alergicoComidas === "si" && !formData.alergicoComidasCual) {
+      newErrors.alergicoComidasCual = "Este campo es requerido";
+    }
+
+    if (
+      formData.alergicoPicaduras === "si" &&
+      !formData.alergicoPicadurasCual
+    ) {
+      newErrors.alergicoPicadurasCual = "Este campo es requerido";
+    }
+
+    if (formData.vacunasCovid === "si") {
+      if (!formData.vacunaCovidCual) {
+        newErrors.vacunaCovidCual = "Este campo es requerido";
+      }
+      if (!formData.vacunaCovidDosis) {
+        newErrors.vacunaCovidDosis = "Este campo es requerido";
+      }
+    }
+
+    if (formData.tomaMedicamentos === "si" && !formData.tomaMedicamentosCual) {
+      newErrors.tomaMedicamentosCual = "Este campo es requerido";
+    }
+
+    if (formData.tratamiento === "si" && !formData.tratamientoCual) {
+      newErrors.tratamientoCual = "Este campo es requerido";
+    }
+
+    if (formData.puedeComerDeTodo === "no" && !formData.noPuedeComer) {
+      newErrors.noPuedeComer = "Este campo es requerido";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      setMessage("Por favor complete todos los campos requeridos");
+      return;
+    }
+
     const data = {
       nombre: formData.nombre,
       apellido: formData.apellido,
@@ -145,18 +215,28 @@ function CampingForm({ campingData }) {
       certificadoMedico,
       bucoDental,
     };
-    await axios.post('/api/send', { recipientEmail:data.email, name:data.nombre })
+    await axios.post("/api/send", {
+      recipientEmail: data.email,
+      name: data.nombre,
+    });
     if (certificadoMedico !== null && bucoDental !== null) {
-      await axios
+      if (data.datosVeridicos !== false || data.autorizacionDatos !== false) {
+        await axios
         .post("/api/campingForm", data)
         .then((response) => {
           setMessage(response.data.message);
-          axios.post('/api/send', { recipientEmail:data.email, name:data.nombre })
+          axios.post("/api/send", {
+            recipientEmail: data.email,
+            name: data.nombre,
+          });
           router.push("/parque");
         })
         .catch((error) => {
           setMessage(error.response.data.message);
         });
+      } else {
+        setMessage("Es necesario ceder los acuerdos");
+      }
     } else {
       setMessage("Es necesario añadir ambos certificados");
     }
@@ -193,11 +273,15 @@ function CampingForm({ campingData }) {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.nombre
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
                 placeholder="Ingrese su nombre..."
-                required
               />
+              {errors.nombre && <p className="text-red-500">{errors.nombre}</p>}
             </div>
             <div className="md:w-1/2">
               <label className="block text-gray-700 font-normal mb-1">
@@ -207,11 +291,17 @@ function CampingForm({ campingData }) {
                 name="apellido"
                 value={formData.apellido}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.apellido
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
                 placeholder="Ingrese su apellido..."
-                required
               />
+              {errors.apellido && (
+                <p className="text-red-500">{errors.apellido}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-3 mb-4">
@@ -223,11 +313,17 @@ function CampingForm({ campingData }) {
                 name="documento"
                 value={formData.documento}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.documento
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
-                placeholder="Ingrese su N° de documento..."
-                required
+                placeholder="Ingrese su documento..."
               />
+              {errors.documento && (
+                <p className="text-red-500">{errors.documento}</p>
+              )}
             </div>
             <div className="md:w-1/2">
               <label className="block text-gray-700 font-normal mb-1">
@@ -237,11 +333,16 @@ function CampingForm({ campingData }) {
                 name="fechaNacimiento"
                 value={formData.fechaNacimiento}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.documento
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="date"
-                placeholder="Ingrese su fecha de nacimiento..."
-                required
               />
+              {errors.fechaNacimiento && (
+                <p className="text-red-500">{errors.fechaNacimiento}</p>
+              )}
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-3 mb-4">
@@ -253,11 +354,17 @@ function CampingForm({ campingData }) {
                 name="domicilio"
                 value={formData.domicilio}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.domicilio
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
                 placeholder="Ingrese su domicilio..."
-                required
               />
+              {errors.domicilio && (
+                <p className="text-red-500">{errors.domicilio}</p>
+              )}
             </div>
             <div className="md:w-1/3">
               <label className="block text-gray-700 font-normal mb-1">
@@ -267,15 +374,21 @@ function CampingForm({ campingData }) {
                 name="localidad"
                 value={formData.localidad}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.localidad
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
                 placeholder="Ingrese su localidad..."
-                required
               />
+              {errors.localidad && (
+                <p className="text-red-500">{errors.localidad}</p>
+              )}
             </div>
             <div className="md:w-1/3">
               <label className="block text-gray-700 font-normal mb-1">
-                Teléfono
+                Teléfono (Opcional)
               </label>
               <input
                 name="telefono"
@@ -295,11 +408,17 @@ function CampingForm({ campingData }) {
               name="telefonoEmergencia"
               value={formData.telefonoEmergencia}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                errors.telefonoEmergencia
+                  ? "border-red-500 border-2 focus:ring-0"
+                  : "border-gray-300"
+              }`}
               type="text"
-              placeholder="Ingrese su teléfono de emergencia..."
-              required
+              placeholder="Número de teléfono..."
             />
+            {errors.telefonoEmergencia && (
+              <p className="text-red-500">{errors.telefonoEmergencia}</p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 font-normal mb-1">
@@ -309,11 +428,15 @@ function CampingForm({ campingData }) {
               name="celular"
               value={formData.celular}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                errors.celular
+                  ? "border-red-500 border-2 focus:ring-0"
+                  : "border-gray-300"
+              }`}
               type="text"
-              placeholder="Ingrese su número..."
-              required
+              placeholder="Ingrese su celular..."
             />
+            {errors.celular && <p className="text-red-500">{errors.celular}</p>}
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 font-normal mb-1">
@@ -323,11 +446,15 @@ function CampingForm({ campingData }) {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-              type="text"
+              className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                errors.email
+                  ? "border-red-500 border-2 focus:ring-0"
+                  : "border-gray-300"
+              }`}
+              type="email"
               placeholder="Ingrese su email..."
-              required
             />
+            {errors.email && <p className="text-red-500">{errors.email}</p>}
           </div>
           <h4 className="text-lg mb-4">Categoria de Inscripción:</h4>
           <div className="flex flex-col md:flex-row gap-3 mb-4">
@@ -377,15 +504,25 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.alergicoMedicamentos === "si" && (
-                <input
-                  name="alergicoMedicamentosCual"
-                  value={formData.alergicoMedicamentosCual}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Cual?"
-                  required
-                />
+                <div>
+                  <input
+                    name="alergicoMedicamentosCual"
+                    value={formData.alergicoMedicamentosCual}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.alergicoMedicamentosCual
+                        ? "border-red-500 border-2"
+                        : ""
+                    }`}
+                    placeholder="Cual?"
+                  />
+                  {errors.alergicoMedicamentosCual && (
+                    <p className="text-red-500">
+                      {errors.alergicoMedicamentosCual}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
             <div className="md:w-1/3">
@@ -402,15 +539,23 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.alergicoComidas === "si" && (
-                <input
-                  name="alergicoComidasCual"
-                  value={formData.alergicoComidasCual}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Cual?"
-                  required
-                />
+                <div>
+                  <input
+                    name="alergicoComidasCual"
+                    value={formData.alergicoComidasCual}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.alergicoComidasCual
+                        ? "border-red-500 border-2"
+                        : ""
+                    }`}
+                    placeholder="Cual?"
+                  />
+                  {errors.alergicoComidasCual && (
+                    <p className="text-red-500">{errors.alergicoComidasCual}</p>
+                  )}
+                </div>
               )}
             </div>
             <div className="md:w-1/3">
@@ -427,15 +572,25 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.alergicoPicaduras === "si" && (
-                <input
-                  name="alergicoPicadurasCual"
-                  value={formData.alergicoPicadurasCual}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Cual?"
-                  required
-                />
+                <div>
+                  <input
+                    name="alergicoPicadurasCual"
+                    value={formData.alergicoPicadurasCual}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.alergicoPicadurasCual
+                        ? "border-red-500 border-2"
+                        : ""
+                    }`}
+                    placeholder="Cual?"
+                  />
+                  {errors.alergicoPicadurasCual && (
+                    <p className="text-red-500">
+                      {errors.alergicoPicadurasCual}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </div>
@@ -448,15 +603,21 @@ function CampingForm({ campingData }) {
                 name="medicoCabecera"
                 value={formData.medicoCabecera}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                type="text"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.medicoCabecera
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
+                type="medicoCabecera"
                 placeholder="Ingrese su nómbre..."
-                required
               />
+              {errors.medicoCabecera && (
+                <p className="text-red-500">{errors.medicoCabecera}</p>
+              )}
             </div>
             <div className="md:w-1/2">
               <label className="block text-gray-700 font-normal mb-1">
-                Teléfono
+                Teléfono (Opcional)
               </label>
               <input
                 name="telefonoMedico"
@@ -477,15 +638,21 @@ function CampingForm({ campingData }) {
                 name="obraSocial"
                 value={formData.obraSocial}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.obraSocial
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
                 type="text"
                 placeholder="Ingrese su nómbre..."
-                required
               />
+              {errors.obraSocial && (
+                <p className="text-red-500">{errors.obraSocial}</p>
+              )}
             </div>
             <div className="md:w-1/2">
               <label className="block text-gray-700 font-normal mb-1">
-                Teléfono
+                Teléfono (Opcional)
               </label>
               <input
                 name="telefonoObraSocial"
@@ -582,10 +749,14 @@ function CampingForm({ campingData }) {
                     value={formData.vacunaCovidCual}
                     onChange={handleInputChange}
                     type="text"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                    placeholder=""
-                    required
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.vacunaCovidCual ? "border-red-500 border-2" : ""
+                    }`}
+                    placeholder="Cual?"
                   />
+                  {errors.vacunaCovidCual && (
+                    <p className="text-red-500">{errors.vacunaCovidCual}</p>
+                  )}
                 </div>
                 <div className="md:w-1/3">
                   <label className="block text-gray-700 font-normal mb-1">
@@ -596,10 +767,14 @@ function CampingForm({ campingData }) {
                     value={formData.vacunaCovidDosis}
                     onChange={handleInputChange}
                     type="text"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                    placeholder=""
-                    required
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.vacunaCovidDosis ? "border-red-500 border-2" : ""
+                    }`}
+                    placeholder="Cual?"
                   />
+                  {errors.vacunaCovidDosis && (
+                    <p className="text-red-500">{errors.vacunaCovidDosis}</p>
+                  )}
                 </div>
               </>
             )}
@@ -619,15 +794,25 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.tomaMedicamentos === "si" && (
-                <input
-                  name="tomaMedicamentosCual"
-                  value={formData.tomaMedicamentosCual}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Cuales?"
-                  required
-                />
+                <div>
+                  <input
+                    name="tomaMedicamentosCual"
+                    value={formData.tomaMedicamentosCual}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.tomaMedicamentosCual
+                        ? "border-red-500 border-2"
+                        : ""
+                    }`}
+                    placeholder="Cuales?"
+                  />
+                  {errors.tomaMedicamentosCual && (
+                    <p className="text-red-500">
+                      {errors.tomaMedicamentosCual}
+                    </p>
+                  )}
+                </div>
               )}
             </div>
             <div className="md:w-1/4">
@@ -644,15 +829,21 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.tratamiento === "si" && (
-                <input
-                  name="tratamientoCual"
-                  value={formData.tratamientoCual}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Cuales?"
-                  required
-                />
+                <div>
+                  <input
+                    name="tratamientoCual"
+                    value={formData.tratamientoCual}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.tratamientoCual ? "border-red-500 border-2" : ""
+                    }`}
+                    placeholder="Cuales?"
+                  />
+                  {errors.tratamientoCual && (
+                    <p className="text-red-500">{errors.tratamientoCual}</p>
+                  )}
+                </div>
               )}
             </div>
             <div className="md:w-1/4">
@@ -669,15 +860,21 @@ function CampingForm({ campingData }) {
                 <option value="si">Si</option>
               </select>
               {formData.puedeComerDeTodo === "no" && (
-                <input
-                  name="noPuedeComer"
-                  value={formData.noPuedeComer}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                  placeholder="Que cosas?"
-                  required
-                />
+                <div>
+                  <input
+                    name="noPuedeComer"
+                    value={formData.noPuedeComer}
+                    onChange={handleInputChange}
+                    type="text"
+                    className={`w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                      errors.noPuedeComer ? "border-red-500 border-2" : ""
+                    }`}
+                    placeholder="Que cosa?"
+                  />
+                  {errors.noPuedeComer && (
+                    <p className="text-red-500">{errors.noPuedeComer}</p>
+                  )}
+                </div>
               )}
             </div>
             <div className="md:w-1/4">
@@ -717,10 +914,16 @@ function CampingForm({ campingData }) {
                 value={formData.grupoSanguineo}
                 onChange={handleInputChange}
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
-                placeholder="Ingrese grupo sanguíneo..."
-                required
+                className={`w-full px-4 py-2 border rounded-lg focus:ring outline-none focus:ring-moreblue ${
+                  errors.grupoSanguineo
+                    ? "border-red-500 border-2 focus:ring-0"
+                    : "border-gray-300"
+                }`}
+                placeholder="Ingrese su grupo sanguíneo..."
               />
+              {errors.grupoSanguineo && (
+                <p className="text-red-500">{errors.grupoSanguineo}</p>
+              )}
             </div>
             <div className="md:w-1/2">
               <label className="block text-gray-700 font-normal mb-1">
@@ -799,7 +1002,6 @@ function CampingForm({ campingData }) {
               name="datosVeridicos"
               checked={formData.datosVeridicos}
               onChange={handleInputChange}
-              required
             />
             <p>
               Declaro que todos los datos son verídicos al dia de la fecha de
