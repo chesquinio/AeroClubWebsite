@@ -951,7 +951,7 @@ function CampingForm({ campingData }) {
                       certificadoMedico ? "text-gray-500" : "text-blue-500"
                     }`}
                   >
-                    Seleccionar archivo
+                    Seleccionar PDF
                   </span>
                   <input
                     onChange={uploadPdf1}
@@ -978,7 +978,7 @@ function CampingForm({ campingData }) {
                       bucoDental ? "text-gray-500" : "text-blue-500"
                     }`}
                   >
-                    Seleccionar archivo
+                    Seleccionar PDF
                   </span>
                   <input
                     onChange={uploadPdf2}
@@ -994,6 +994,9 @@ function CampingForm({ campingData }) {
                 </span>
               </div>
             </div>
+          </div>
+          <div className="w-full mb-4">
+              <p className="text-gray-500 text-sm">Estos PDF se utilizaran como forma de archivo, adicional a esto es necesario presentarlos en formato fisico en la oficina del club</p>
           </div>
           <div className="flex gap-3 mb-4">
             <input
