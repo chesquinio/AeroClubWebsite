@@ -6,6 +6,7 @@ import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { sendEmail } from "../api/send";
 
 function CampingForm({ campingData }) {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ function CampingForm({ campingData }) {
     telefono: "",
     telefonoEmergencia: "",
     celular: "",
+    email: "",
     socio: "no",
     particular: "no",
     alergicoMedicamentos: "no",
@@ -57,9 +59,9 @@ function CampingForm({ campingData }) {
 
   useEffect(() => {
     if (!campingData[0].activeBotton) {
-      router.push('/colonia')
-    }  
-  }, [])
+      router.push("/colonia");
+    }
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -108,6 +110,7 @@ function CampingForm({ campingData }) {
       telefono: formData.telefono,
       telefonoEmergencia: formData.telefonoEmergencia,
       celular: formData.celular,
+      email: formData.email,
       socio: formData.socio,
       particular: formData.particular,
       alergicoMedicamentos: formData.alergicoMedicamentos,
@@ -142,16 +145,18 @@ function CampingForm({ campingData }) {
       certificadoMedico,
       bucoDental,
     };
+    sendEmail( data.email, data.nombre );
     if (certificadoMedico !== null && bucoDental !== null) {
-      await axios
+      
+      /*await axios
         .post("/api/campingForm", data)
         .then((response) => {
           setMessage(response.data.message);
-          router.push("/colonia");
+          router.push("/parque");
         })
         .catch((error) => {
           setMessage(error.response.data.message);
-        });
+        });*/
     } else {
       setMessage("Es necesario añadir ambos certificados");
     }
@@ -169,7 +174,7 @@ function CampingForm({ campingData }) {
           className="bg-white rounded-lg shadow-lg p-8 w-4/5 lg:w-1/2"
         >
           <h2
-            className="font-medium text-2xl mb-4 text-center"
+            className="font-medium text-3xl mb-4 text-center"
             style={{
               background: "linear-gradient(to right, #4EACF2, #004691)",
               WebkitBackgroundClip: "text",
@@ -307,6 +312,20 @@ function CampingForm({ campingData }) {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
               type="text"
               placeholder="Ingrese su número..."
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-normal mb-1">
+              Email
+            </label>
+            <input
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring outline-none focus:ring-moreblue"
+              type="text"
+              placeholder="Ingrese su email..."
               required
             />
           </div>
@@ -724,7 +743,13 @@ function CampingForm({ campingData }) {
               </label>
               <div className="relative">
                 <label className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg cursor-pointer bg-white hover:bg-gray-100 transition-colors duration-300">
-                  <span className={`${certificadoMedico ? 'text-gray-500' : 'text-blue-500'}`}>Seleccionar archivo</span>
+                  <span
+                    className={`${
+                      certificadoMedico ? "text-gray-500" : "text-blue-500"
+                    }`}
+                  >
+                    Seleccionar archivo
+                  </span>
                   <input
                     onChange={uploadPdf1}
                     className="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer"
@@ -745,7 +770,13 @@ function CampingForm({ campingData }) {
               </label>
               <div className="relative">
                 <label className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg cursor-pointer bg-white hover:bg-gray-100 transition-colors duration-300">
-                  <span className={`${bucoDental ? 'text-gray-500' : 'text-blue-500'}`}>Seleccionar archivo</span>
+                  <span
+                    className={`${
+                      bucoDental ? "text-gray-500" : "text-blue-500"
+                    }`}
+                  >
+                    Seleccionar archivo
+                  </span>
                   <input
                     onChange={uploadPdf2}
                     className="hidden absolute inset-0 w-full h-full opacity-0 cursor-pointer"

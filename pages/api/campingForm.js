@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
       const {
         nombre, apellido, documento, fechaNacimiento, domicilio, localidad,
-        telefono, telefonoEmergencia, celular, socio, particular, alergicoMedicamentos,
+        telefono, telefonoEmergencia, celular, email, socio, particular, alergicoMedicamentos,
         alergicoMedicamentosCual, alergicoComidas, alergicoComidasCual,
         alergicoPicaduras, alergicoPicadurasCual, medicoCabecera, 
         telefonoMedico, obraSocial, telefonoObraSocial, epilepsia, diabetes,
@@ -34,6 +34,7 @@ export default async function handler(req, res) {
         telefono,
         telefonoEmergencia,
         celular,
+        email,
         categoriaInscripcion: {
           socio,
           particular,
