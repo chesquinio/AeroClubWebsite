@@ -145,18 +145,18 @@ function CampingForm({ campingData }) {
       certificadoMedico,
       bucoDental,
     };
-    sendEmail( data.email, data.nombre );
+    await axios.post('/api/send', { recipientEmail:data.email, name:data.nombre })
     if (certificadoMedico !== null && bucoDental !== null) {
-      
-      /*await axios
+      await axios
         .post("/api/campingForm", data)
         .then((response) => {
           setMessage(response.data.message);
+          axios.post('/api/send', { recipientEmail:data.email, name:data.nombre })
           router.push("/parque");
         })
         .catch((error) => {
           setMessage(error.response.data.message);
-        });*/
+        });
     } else {
       setMessage("Es necesario añadir ambos certificados");
     }
