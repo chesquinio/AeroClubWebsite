@@ -45,7 +45,7 @@ const Header = () => {
   };
 
   const headerStyle = `fixed z-10 top-0 left-0 w-full flex justify-between items-center transition-all duration-400 px-4 bg-white
-  ${isScrolled ? 'h-16' : 'h-24'}`;
+  ${isScrolled ? "h-16" : "h-24"}`;
 
   const linkStyle =
     "text-gray-500 text-lg font-ligth hover:text-gray-900 transition-all duration-400";
@@ -60,12 +60,16 @@ const Header = () => {
             className="rounded-md w-10"
           />
         </Link>
-        <div className="hidden md:flex justify-center items-center space-x-10">
+        <div className="hidden md:flex justify-center items-center md:space-x-6 lg:space-x-10">
           <div className="flex items-center">
             <Link href={"/"} className={linkStyle}>
               Inicio
             </Link>
-            <div className={`${isScrolled ? 'h-9' : 'h-12'} w-0.5 bg-gray-400 ml-12 transition-all duration-400`}></div>
+            <div
+              className={`${
+                isScrolled ? "h-9" : "h-12"
+              } w-0.5 bg-gray-400 md:ml-8 lg:ml-12 transition-all duration-400`}
+            ></div>
           </div>
           <Link href={"/noticias"} className={linkStyle}>
             Noticias
@@ -79,7 +83,7 @@ const Header = () => {
           <Link href={"/parque"} className={linkStyle}>
             Parque
           </Link>
-          
+
           {/* !isLogged && (
              <Link href={"/socios"} className={linkStyle}>
             Socios
@@ -94,26 +98,37 @@ const Header = () => {
             </button>
           ) */}
         </div>
+        <div className="hidden md:flex justify-end items-center">
+          <a
+            href="https://acr.brio.club/accounts/login/?next=/"
+            target="_blanck"
+            className={linkStyle}
+          >
+            Sede Virtual
+          </a>
+        </div>
       </div>
 
       {/* Icono de menú en dispositivos móviles */}
       <div className="md:hidden z-10 cursor-pointer flex items-center">
         {isMenuOpen ? (
-          <svg
-            onClick={closeMenu}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-8 h-8 text-gray-500"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
+          <div className="fixed top-8 right-4">
+            <svg
+              onClick={closeMenu}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-8 h-8 text-gray-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         ) : (
           <svg
             onClick={toggleMenu}
@@ -154,7 +169,7 @@ const Header = () => {
                 Inicio
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
-                <i class='bx bx-plus'></i>
+                <i class="bx bx-plus"></i>
               </div>
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
@@ -166,7 +181,7 @@ const Header = () => {
                 Noticias
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
-                <i class='bx bx-plus'></i>
+                <i class="bx bx-plus"></i>
               </div>
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
@@ -178,7 +193,7 @@ const Header = () => {
                 Aeronáutica
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
-                <i class='bx bx-plus'></i>
+                <i class="bx bx-plus"></i>
               </div>
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
@@ -190,7 +205,7 @@ const Header = () => {
                 Tenis
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
-                <i class='bx bx-plus'></i>
+                <i class="bx bx-plus"></i>
               </div>
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
@@ -202,7 +217,20 @@ const Header = () => {
                 Parque
               </Link>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
-                <i class='bx bx-plus'></i>
+                <i class="bx bx-plus"></i>
+              </div>
+            </div>
+            <div className="flex justify-between rounded hover:bg-gray-100 transition">
+              <a
+                href="https://acr.brio.club/accounts/login/?next=/"
+                target="_blanck"
+                className="block py-2 w-full text-xl text-gray-600 ml-5"
+                onClick={closeMenu}
+              >
+                Sede Virtual
+              </a>
+              <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
+                <i class="bx bx-plus"></i>
               </div>
             </div>
             {/* !isLogged && (
