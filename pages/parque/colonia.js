@@ -5,11 +5,10 @@ import { CampingData } from "@/model/CampingData";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 function CampingPage({ campingData }) {
   const router = useRouter();
-
   useEffect(() => {
     if (!campingData[0].activeBotton) {
       router.push("/parque");

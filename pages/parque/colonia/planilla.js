@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useForm, Controller } from "react-hook-form";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import ModifySelect from "@/components/ModifySelects";
 import { mongooseConnect } from "@/lib/mongoose";
