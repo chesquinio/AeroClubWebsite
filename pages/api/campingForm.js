@@ -5,93 +5,86 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     await mongooseConnect();
     try {
-      const {
-        nombre, apellido, documento, fechaNacimiento, domicilio, localidad,
-        telefono, telefonoEmergencia, celular, email, socio, particular, alergicoMedicamentos,
-        alergicoMedicamentosCual, alergicoComidas, alergicoComidasCual,
-        alergicoPicaduras, alergicoPicadurasCual, medicoCabecera, 
-        telefonoMedico, obraSocial, telefonoObraSocial, epilepsia, diabetes,
-        asma, afeccionesCardiacas, vacunasCovid, vacunaCovidCual,
-        vacunaCovidDosis, tomaMedicamentos, tomaMedicamentosCual,
-        tratamiento, tratamientoCual, puedeComerDeTodo, noPuedeComer,
-        seMantieneAFlote, sabeNadar, grupoSanguineo, datoRelevancia,
-        certificadoMedico, bucoDental, datosVeridicos, autorizacionDatos,
-      } = req.body;
+      const { data, childrenAuth } = req.body;
+      console.log(data);
 
-      const existingForm = await CampingForm.findOne({ documento });
+      const existingForm = await CampingForm.findOne({
+        documento: data.documento,
+      });
 
       if (existingForm) {
-        return res.status(400).json({ message: "Ya existe una inscripción con este documento" });
+        return res
+          .status(400)
+          .json({ message: "Ya existe una inscripción con este documento" });
       }
 
       const formData = {
-        nombre,
-        apellido,
-        documento,
-        fechaNacimiento,
-        domicilio,
-        localidad,
-        telefono,
-        telefonoEmergencia,
-        celular,
-        email,
-        categoriaInscripcion: {
-          socio,
-          particular,
-        },
+        nombre: data.nombre,
+        apellido: data.apellido,
+        documento: data.documento,
+        curso: data.curso,
+        hermanoDe: data.hermanoDe,
+        email: data.email,
         alergias: {
           medicamentos: {
-            tieneAlergia: alergicoMedicamentos,
-            descripcion: alergicoMedicamentosCual,
+            tieneAlergia: data.alergicoMedicamentos,
+            descripcion: data.tipoAlergicoMedicamentos,
           },
           comidas: {
-            tieneAlergia: alergicoComidas,
-            descripcion: alergicoComidasCual,
+            tieneAlergia: data.alergicoComidas,
+            descripcion: data.tipoAlergicoComidas,
           },
           picaduras: {
-            tieneAlergia: alergicoPicaduras,
-            descripcion: alergicoPicadurasCual,
+            tieneAlergia: data.alergicoPicaduras,
+            descripcion: data.tipoAlergicoPicaduras,
           },
         },
         medicoCabecera: {
-          nombre: medicoCabecera,
-          telefono: telefonoMedico,
+          nombre: data.medicoCabecera,
+          telefono: data.telefonoMedico,
         },
         obraSocial: {
-          nombre: obraSocial,
-          telefono : telefonoObraSocial,
+          nombre: data.obraSocial,
+          telefono: data.telefonoObraSocial,
         },
         padecimientos: {
-          epilepsia,
-          diabetes,
-          asma,
-          afeccionesCardiacas,
+          epilepsia: data.epilepsia,
+          diabetes: data.diabetes,
+          asma: data.asma,
+          afeccionesCardiacas: data.afeccionesCardiacas,
         },
         vacunasCovid: {
-          recibioVacuna: vacunasCovid,
-          cualVacuna: vacunaCovidCual,
-          cuantasDosis: vacunaCovidDosis,
+          recibioVacuna: data.vacunasCovid,
+          cualVacuna: data.vacunaCovidCual,
+          cuantasDosis: data.vacunaCovidDosis,
         },
         tomaMedicamentos: {
-          tomaMedicamentos,
-          descripcion: tomaMedicamentosCual,
+          tomaMedicamentos: data.tomaMedicamentos,
+          descripcion: data.tipoTomaMedicamentos,
         },
         sigueTratamiento: {
-          sigueTratamiento: tratamiento,
-          descripcion: tratamientoCual,
+          sigueTratamiento: data.tratamiento,
+          descripcion: data.tipoTratamiento,
         },
         puedeComerDeTodo: {
-          puedeComerDeTodo,
-          descripcion: noPuedeComer,
+          puedeComerDeTodo: data.puedeComerDeTodo,
+          descripcion: data.tipoNoPuedeComer,
         },
-        seMantieneAFlote,
-        sabeNadar,
-        grupoSanguineo,
-        datoRelevancia,
-        certificadoMedico,
-        bucoDental,
-        datosVeridicos: datosVeridicos === "on",
-        autorizacionDatos: autorizacionDatos === "on",
+        seMantieneAFlote: data.seMantieneAFlote,
+        sabeNadar: data.sabeNadar,
+        grupoSanguineo: data.grupoSanguineo,
+        datoRelevancia: data.datoRelevancia,
+        childrenAuth,
+        pariente: data.pariente,
+        parienteDocumento: data.parienteDocumento,
+        parienteAuth: data.parienteAuth,
+        parienteAuthDocumento: data.parienteAuthDocumento,
+        edadChico: data.edadChico,
+        parentescoParienteAuth: data.parentescoParientAuth,
+        celParienteAuth: data.celParienteAuth,
+        datosVeridicos: data.datosVeridicos,
+        autorizacionImagen: data.autorizacionImagen,
+        autorizacionRopa: data.autorizacionRopa,
       };
 
       const newForm = new CampingForm(formData);
