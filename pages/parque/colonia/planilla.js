@@ -695,8 +695,8 @@ function Test({ campingData }) {
                             )}
                             rules={{ required: true }}
                           />{" "}
-                          años, concurrente de "Aero Colonia", en caso de ser
-                          necesario
+                          años, concurrente de &ldquo;Aero Colonia&ldquo;, en
+                          caso de ser necesario
                         </p>
                         <div className="flex flex-col gap-4 mb-8">
                           <span className="text-lg">
@@ -818,8 +818,8 @@ function Test({ campingData }) {
                             )}
                             rules={{ required: true }}
                           />{" "}
-                          años, concurrente de "Aero Colonia", en caso de ser
-                          necesario
+                          años, concurrente de &ldquo;Aero Colonia&ldquo;, en
+                          caso de ser necesario
                         </p>
                       </div>
                     </motion.div>
