@@ -154,7 +154,7 @@ function Test({ campingData }) {
                   </div>
                   <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
-                      Curso
+                      Grado / Curso
                     </label>
                     <Controller
                       name="curso"
@@ -173,7 +173,7 @@ function Test({ campingData }) {
                 <div className="flex flex-col md:flex-row gap-3 mb-4">
                   <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
-                      Es hermano de... (Opcional)
+                      Es hermano/a de... (Opcional)
                     </label>
                     <Controller
                       name="hermanoDe"
@@ -189,7 +189,7 @@ function Test({ campingData }) {
                   </div>
                   <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
-                      Email de contacto al padre
+                      Email de contacto del familiar
                     </label>
                     <Controller
                       name="email"

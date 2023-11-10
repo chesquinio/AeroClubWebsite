@@ -80,7 +80,7 @@ export default async function handler(req, res) {
         parienteAuth: data.parienteAuth,
         parienteAuthDocumento: data.parienteAuthDocumento,
         edadChico: data.edadChico,
-        parentescoParienteAuth: data.parentescoParientAuth,
+        parentescoParienteAuth: data.parentescoParienteAuth,
         celParienteAuth: data.celParienteAuth,
         datosVeridicos: data.datosVeridicos,
         autorizacionImagen: data.autorizacionImagen,

@@ -44,29 +44,20 @@ function CampingPage({ campingData }) {
             <p>
               Arranca la temporada de verano y con ello la colonia de vacaciones
               del Aero Club, un lugar donde chicos y chicas pueden disfrutar de
-              la pileta, el sol y muchísimos juegos. Reiteramos que para validar
-              por completo la inscripción, es necesario completar la planilla
-              posterior a la realización del pago por el sistema BRIO de la sede
-              virtual. La colonia arranca desde los 3 años y los horarios son
-              los siguientes (estos horarios pueden estar sujetos a leves
+              la pileta, el sol y muchísimos juegos.
+            </p>
+            <p>
+              Para realizar la inscripción a la colonia, será necesario
+              dirigirse al link que se encuentra debajo y rellenar los datos
+              para completar el pago del abono. Una vez finalizado el pago, se
+              le enviara un correo donde podrán encontrar nuevamente un link
+              para terminar de rellenar los datos referidos a la ficha médica y
+              autorizaciones de cada chico/a.
+            </p>
+            <p>
+              La colonia arranca desde los 3 años y los horarios son los
+              siguientes (estos horarios pueden estar sujetos a leves
               modificaciones):
-            </p>
-            <p>
-              Posterior al abono de la colonia, deberán rellenar una ficha de
-              inscripción para cada chico/a, posterior a esto, se deberán
-              presentar los certificados médicos en la sede.
-            </p>
-            <ul>
-              <span>Certificados a presentar:</span>
-              <li>- Certificado médico apto natatorio</li>
-              <li>- Bucodental estampillado</li>
-            </ul>
-            <p>
-              Reiteramos que para validar por completo la inscripción, es
-              necesario completar la planilla posterior a la realización del
-              pago por el sistema BRIO de la sede virtual. La colonia arranca
-              desde los 3 años y los horarios son los siguientes (estos horarios
-              pueden estar sujetos a leves modificaciones):
             </p>
             <div className="flex flex-row justify-between md:mr-14 lg:mr-0 xl:mr-20">
               <ul>
@@ -83,11 +74,16 @@ function CampingPage({ campingData }) {
                 <li>16 a 19hs</li>
               </ul>
             </div>
+            <ul>
+              <span>Certificados a presentar:</span>
+              <li>- Certificado médico apto natatorio</li>
+              <li>- Bucodental estampillado</li>
+            </ul>
           </div>
           <div className="flex justify-center items-center h-full backdrop-blur-sm mt-6">
             <Link
               href="/parque/colonia/planilla"
-              className="text-gray-600 text-xl py-2 px-4 border-2 border-opacity-100 border-gray-500 md:border-opacity-0 hover:text-gray-900 hover:border-opacity-100 transition-all duration-500"
+              className="text-gray-600 text-xl py-2 px-4 text-center border-2 border-opacity-100 border-gray-500 md:border-opacity-0 hover:text-gray-900 hover:border-opacity-100 transition-all duration-500"
             >
               Planilla de Inscripción
             </Link>
