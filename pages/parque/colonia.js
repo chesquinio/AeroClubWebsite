@@ -21,10 +21,17 @@ function CampingPage({ campingData }) {
         <title>Inscripciones Colonia | Aero Club Rafaela</title>
       </Head>
       <Header />
-      <section className="mt-24 mb-6 flex justify-center items-start min-h-screen">
-        <div className="bg-white rounded-lg shadow-lg p-8 w-4/5 lg:w-1/2">
+      <section className="mt-24 mb-10 flex justify-center items-start min-h-screen">
+        <div className="bg-white rounded-lg shadow-lg px-4 sm:px-8 pb-6 mx-4 w-full sm:w-4/5 lg:w-1/2">
+          <div className="h-96 my-6">
+            <img
+              className="object-cover w-full h-full rounded-md"
+              src="/parque1.png"
+              alt="Pileta Colonia"
+            />
+          </div>
           <h2
-            className="font-medium text-3xl mb-4 text-center"
+            className="font-medium text-3xl mb-8 text-center"
             style={{
               background: "linear-gradient(to right, #4EACF2, #004691)",
               WebkitBackgroundClip: "text",
@@ -33,13 +40,6 @@ function CampingPage({ campingData }) {
           >
             Inscripción a la Colonia
           </h2>
-          <div className="h-96 my-10">
-            <img
-              className="object-cover w-full h-full rounded-md"
-              src="/parque1.png"
-              alt="Pileta Colonia"
-            />
-          </div>
           <div className="flex flex-col gap-5">
             <p>
               Arranca la temporada de verano y con ello la colonia de vacaciones
@@ -79,6 +79,17 @@ function CampingPage({ campingData }) {
               <li>- Certificado médico apto natatorio</li>
               <li>- Bucodental estampillado</li>
             </ul>
+            <span>
+              Toda la <b>información</b> detallada y <b>precios</b> de la
+              colonia se encuentran{" "}
+              <a
+                href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/1700087731558.pdf"
+                target="_blanck"
+                className="text-blue-500 underline"
+              >
+                aquí
+              </a>
+            </span>
           </div>
           <div className="flex justify-center items-center h-full backdrop-blur-sm mt-6">
             <Link

@@ -60,7 +60,7 @@ const Header = () => {
             className="rounded-md w-10"
           />
         </Link>
-        <div className="hidden md:flex justify-center items-center md:space-x-6 lg:space-x-10">
+        <div className="hidden md:flex justify-center items-center gap-7">
           <div className="flex items-center">
             <Link href={"/"} className={linkStyle}>
               Inicio

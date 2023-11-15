@@ -85,7 +85,7 @@ function Test({ campingData }) {
         Planilla de Inscripción
       </h3>
       <motion.div
-        className="bg-white rounded-lg shadow-lg p-8 w-4/5 lg:w-1/2 mx-auto mb-8 text-sm sm:text-base"
+        className="bg-white rounded-lg shadow-lg p-8 sm:mb-10 w-full sm:w-4/5 lg:w-1/2 mx-auto text-sm sm:text-base"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
