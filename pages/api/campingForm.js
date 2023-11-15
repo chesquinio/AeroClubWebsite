@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     await mongooseConnect();
     try {
-      const { data, childrenAuth } = req.body;
+      const { data, childrenAuth, certifications } = req.body;
       console.log(data);
 
       const existingForm = await CampingForm.findOne({
@@ -75,6 +75,7 @@ export default async function handler(req, res) {
         grupoSanguineo: data.grupoSanguineo,
         datoRelevancia: data.datoRelevancia,
         childrenAuth,
+        certifications,
         pariente: data.pariente,
         parienteDocumento: data.parienteDocumento,
         parienteAuth: data.parienteAuth,

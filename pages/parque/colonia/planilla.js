@@ -8,6 +8,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { CampingData } from "@/model/CampingData";
 import Head from "next/head";
 import Header from "@/components/Header";
+import Certifications from "@/components/Certifications";
 
 function Test({ campingData }) {
   const {
@@ -15,6 +16,10 @@ function Test({ campingData }) {
     handleSubmit,
     formState: { isValid },
   } = useForm({ mode: "onChange" });
+
+  const [certificadoMedico, setCertificadoMedico] = useState(null);
+  const [bucoDental, setBucoDental] = useState(null);
+
   const [currentForm, setCurrentForm] = useState(1);
   const [withdrawAuth, setWithdrawAuth] = useState(false);
   const [exitAuth, setExitAuth] = useState(false);
@@ -34,20 +39,25 @@ function Test({ campingData }) {
       if (!withdrawAuth && !exitAuth) {
         setMessage("Es necesario elegir una de las opciones");
       } else {
-        const childrenAuth = [withdrawAuth, exitAuth];
-        await axios
-          .post("/api/campingForm", { data, childrenAuth })
-          .then((response) => {
-            setMessage(response.data.message);
-            axios.post("/api/send", {
-              recipientEmail: data.email,
-              name: data.nombre,
+        if (!certificadoMedico || !bucoDental) {
+          setMessage("Es necesario añadir ambos certificados");
+        } else {
+          const childrenAuth = [withdrawAuth, exitAuth];
+          const certifications = [certificadoMedico, bucoDental];
+          await axios
+            .post("/api/campingForm", { data, childrenAuth, certifications })
+            .then((response) => {
+              setMessage(response.data.message);
+              axios.post("/api/send", {
+                recipientEmail: data.email,
+                name: data.nombre,
+              });
+              router.push("/parque");
+            })
+            .catch((error) => {
+              setMessage(error.response.data.message);
             });
-            router.push("/parque");
-          })
-          .catch((error) => {
-            setMessage(error.response.data.message);
-          });
+        }
       }
     }
   };
@@ -75,7 +85,7 @@ function Test({ campingData }) {
         Planilla de Inscripción
       </h3>
       <motion.div
-        className="bg-white rounded-lg shadow-lg p-8 w-4/5 lg:w-1/2 mx-auto mb-8"
+        className="bg-white rounded-lg shadow-lg p-8 w-4/5 lg:w-1/2 mx-auto mb-8 text-sm sm:text-base"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -154,7 +164,7 @@ function Test({ campingData }) {
                   </div>
                   <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
-                      Grado / Curso
+                      Grado / Curso (Ciclo lectivo 2024)
                     </label>
                     <Controller
                       name="curso"
@@ -577,7 +587,7 @@ function Test({ campingData }) {
                         setWithdrawAuth(true);
                         setExitAuth(false);
                       }}
-                      className={`w-full md:w-1/2 bg-gray-100 rounded py-3 px-4 transition-all ${
+                      className={`w-full md:w-1/2 bg-gray-100 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
                         withdrawAuth ? "bg-gray-300" : ""
                       }`}
                     >
@@ -589,7 +599,7 @@ function Test({ campingData }) {
                         setExitAuth(true);
                         setWithdrawAuth(false);
                       }}
-                      className={`w-full md:w-1/2 bg-gray-100 rounded py-3 px-4 transition-all ${
+                      className={`w-full md:w-1/2 bg-gray-100 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
                         exitAuth ? "bg-gray-300" : ""
                       }`}
                     >
@@ -825,6 +835,13 @@ function Test({ campingData }) {
                     </motion.div>
                   )}
                 </div>
+                <Certifications
+                  certificadoMedico={certificadoMedico}
+                  bucoDental={bucoDental}
+                  setCertificadoMedico={setCertificadoMedico}
+                  setBucoDental={setBucoDental}
+                  setMessage={setMessage}
+                />
                 <div className="w-full mb-4">
                   <p className="text-gray-500 text-sm">
                     Ademas de la informacion adjuntada, sera necesario presentar
