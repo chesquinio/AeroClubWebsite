@@ -70,20 +70,23 @@ function CampingPage({ campingData }) {
               siguientes (estos horarios pueden estar sujetos a leves
               modificaciones):
             </p>
-            <div className="flex flex-row justify-between md:mr-14 lg:mr-0 xl:mr-20">
-              <ul>
-                <li>Horarios de colonia:</li>
-                <li>• Guarderia: 8h</li>
-              </ul>
-              <ul>
-                <span>• Turno mañana:</span>
-                <li>3 a 7 años: 9 a 12hs</li>
-                <li>8 a 14 años: 9:15 a 12:15hs</li>
-              </ul>
-              <ul>
-                <span>• Turno tarde:</span>
-                <li>16 a 19hs</li>
-              </ul>
+            <h4 className="text-center text-xl font-medium text-gray-700">
+              Horarios de colonia
+            </h4>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 justify-between text-center">
+              <div>
+                <span className="font-medium">• Guarderia:</span>
+                <p>Inicio 8hs</p>
+              </div>
+              <div>
+                <span className="font-medium">• Turno mañana:</span>
+                <p>3 a 7 años: 9 a 12hs</p>
+                <p>8 a 14 años: 9:15 a 12:15hs</p>
+              </div>
+              <div>
+                <span className="font-medium">• Turno tarde:</span>
+                <p>15:30 a 18:30hs</p>
+              </div>
             </div>
             <ul>
               <span>Certificados a presentar:</span>

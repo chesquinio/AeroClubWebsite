@@ -564,6 +564,9 @@ function Test({ campingData }) {
                 exit={{ x: "-100%" }}
               >
                 <div>
+                  <h3 className="mb-2 text-center text-gray-800 text-lg">
+                    Selecciona una de las opciones de salida
+                  </h3>
                   <div className="flex justify-center mb-2">
                     <button
                       onClick={() => {
@@ -587,7 +590,7 @@ function Test({ campingData }) {
                         setWithdrawAuth(true);
                         setExitAuth(false);
                       }}
-                      className={`w-full md:w-1/2 bg-gray-100 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
+                      className={`w-full md:w-1/2 bg-gray-100 hover:bg-gray-300 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
                         withdrawAuth ? "bg-gray-300" : ""
                       }`}
                     >
@@ -599,7 +602,7 @@ function Test({ campingData }) {
                         setExitAuth(true);
                         setWithdrawAuth(false);
                       }}
-                      className={`w-full md:w-1/2 bg-gray-100 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
+                      className={`w-full md:w-1/2 bg-gray-100 hover:bg-gray-300 rounded py-2 px-2 sm:py-3 sm:px-4 transition-all ${
                         exitAuth ? "bg-gray-300" : ""
                       }`}
                     >
