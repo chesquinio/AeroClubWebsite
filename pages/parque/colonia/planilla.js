@@ -156,6 +156,9 @@ function Test({ campingData }) {
                         <input
                           type="text"
                           {...field}
+                          placeholder="Ej: 12345678"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
                           className="mb-4 p-2 border w-full border-gray-300 rounded"
                         />
                       )}
@@ -172,6 +175,7 @@ function Test({ campingData }) {
                       render={({ field }) => (
                         <input
                           type="text"
+                          placeholder="Ej: 3°"
                           {...field}
                           className="mb-4 p-2 border w-full border-gray-300 rounded"
                         />
