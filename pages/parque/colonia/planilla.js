@@ -8,7 +8,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { CampingData } from "@/model/CampingData";
 import Head from "next/head";
 import Header from "@/components/Header";
-import Certifications from "@/components/Certifications";
+// import Certifications from "@/components/Certifications";
 
 function Test({ campingData }) {
   const {
@@ -17,8 +17,8 @@ function Test({ campingData }) {
     formState: { isValid },
   } = useForm({ mode: "onChange" });
 
-  const [certificadoMedico, setCertificadoMedico] = useState(null);
-  const [bucoDental, setBucoDental] = useState(null);
+  // const [certificadoMedico, setCertificadoMedico] = useState(null);
+  // const [bucoDental, setBucoDental] = useState(null);
 
   const [currentForm, setCurrentForm] = useState(1);
   const [withdrawAuth, setWithdrawAuth] = useState(false);
@@ -39,25 +39,20 @@ function Test({ campingData }) {
       if (!withdrawAuth && !exitAuth) {
         setMessage("Es necesario elegir una de las opciones");
       } else {
-        if (!certificadoMedico || !bucoDental) {
-          setMessage("Es necesario añadir ambos certificados");
-        } else {
-          const childrenAuth = [withdrawAuth, exitAuth];
-          const certifications = [certificadoMedico, bucoDental];
-          await axios
-            .post("/api/campingForm", { data, childrenAuth, certifications })
-            .then((response) => {
-              setMessage(response.data.message);
-              axios.post("/api/send", {
-                recipientEmail: data.email,
-                name: data.nombre,
-              });
-              router.push("/parque");
-            })
-            .catch((error) => {
-              setMessage(error.response.data.message);
+        const childrenAuth = [withdrawAuth, exitAuth];
+        await axios
+          .post("/api/campingForm", { data, childrenAuth })
+          .then((response) => {
+            setMessage(response.data.message);
+            axios.post("/api/send", {
+              recipientEmail: data.email,
+              name: data.nombre,
             });
-        }
+            router.push("/parque");
+          })
+          .catch((error) => {
+            setMessage(error.response.data.message);
+          });
       }
     }
   };
@@ -202,6 +197,25 @@ function Test({ campingData }) {
                     />
                   </div>
                   <div className="md:w-1/2">
+                    <label className="block text-gray-700 font-normal mb-1">
+                      N° Telefono del familiar
+                    </label>
+                    <Controller
+                      name="telefono"
+                      control={control}
+                      render={({ field }) => (
+                        <input
+                          type="text"
+                          {...field}
+                          className="mb-4 p-2 border w-full border-gray-300 rounded"
+                        />
+                      )}
+                      rules={{ required: true }}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col md:flex-row gap-3 mb-4">
+                  <div className="w-full">
                     <label className="block text-gray-700 font-normal mb-1">
                       Email de contacto del familiar
                     </label>
@@ -842,13 +856,13 @@ function Test({ campingData }) {
                     </motion.div>
                   )}
                 </div>
-                <Certifications
+                {/* <Certifications
                   certificadoMedico={certificadoMedico}
                   bucoDental={bucoDental}
                   setCertificadoMedico={setCertificadoMedico}
                   setBucoDental={setBucoDental}
                   setMessage={setMessage}
-                />
+                /> */}
                 <div className="w-full mb-4">
                   <p className="text-gray-500 text-sm">
                     Ademas de la informacion adjuntada, sera necesario presentar
