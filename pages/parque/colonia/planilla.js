@@ -215,7 +215,26 @@ function Test({ campingData }) {
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row gap-3 mb-4">
-                  <div className="w-full">
+                  <div className="md:w-1/2">
+                    <label className="block text-gray-700 font-normal mb-1">
+                      Turno
+                    </label>
+                    <Controller
+                      name="turno"
+                      control={control}
+                      defaultValue="mañana"
+                      render={({ field }) => (
+                        <select
+                          {...field}
+                          className="mb-4 p-2 border w-full border-gray-300 rounded"
+                        >
+                          <option value="mañana">Mañana</option>
+                          <option value="tarde">Tarde</option>
+                        </select>
+                      )}
+                    />
+                  </div>
+                  <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
                       Email de contacto del familiar
                     </label>
@@ -713,7 +732,7 @@ function Test({ campingData }) {
                             )}
                             rules={{ required: true }}
                           />{" "}
-                          , de
+                          , cuya edad escolar es de
                           <Controller
                             name="edadChico"
                             control={control}
@@ -836,7 +855,7 @@ function Test({ campingData }) {
                             )}
                             rules={{ required: true }}
                           />{" "}
-                          , de
+                          , cuya edad escolar es de
                           <Controller
                             name="edadChico"
                             control={control}

@@ -96,7 +96,7 @@ const Header = () => {
                   >
                     Principal
                   </Link>
-                  <Link
+                  {/* <Link
                     href="/aeronautica/reservas"
                     className="text-gray-700 hover:bg-gray-100 rounded-bl-md rounded-br-md block px-4 py-3 text-md"
                     role="menuitem"
@@ -104,7 +104,7 @@ const Header = () => {
                     id="menu-item-1"
                   >
                     Reservas
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
             )}
@@ -239,7 +239,7 @@ const Header = () => {
                 >
                   Principal
                 </Link>
-                <Link
+                {/* <Link
                   href="/aeronautica/reservas"
                   onClick={closeMenu}
                   className="text-gray-700 hover:bg-gray-100 block py-2 pl-10 pr-4 text-left w-full text-md"
@@ -248,7 +248,7 @@ const Header = () => {
                   id="menu-item-1"
                 >
                   Reservas
-                </Link>
+                </Link> */}
               </div>
             )}
             <div className="flex justify-between rounded hover:bg-gray-100 transition">

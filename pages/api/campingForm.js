@@ -24,6 +24,7 @@ export default async function handler(req, res) {
         curso: data.curso,
         hermanoDe: data.hermanoDe,
         telefono: data.telefono,
+        turno: data.turno,
         email: data.email,
         alergias: {
           medicamentos: {
