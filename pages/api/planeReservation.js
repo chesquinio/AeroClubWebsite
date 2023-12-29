@@ -1,3 +1,4 @@
+import { filterReservations } from "@/lib/filterReservations";
 import { mongooseConnect } from "@/lib/mongoose";
 import { PlaneReservation } from "@/model/PlaneReservation";
 
@@ -8,11 +9,13 @@ export default async function handle(req, res) {
     try {
       await mongooseConnect();
 
-      const existingReservation = await PlaneReservation.findOne({
+      const existingReservation = await PlaneReservation.find({
         document,
       });
 
-      if (existingReservation) {
+      const { pendingReservations } = filterReservations(existingReservation);
+
+      if (pendingReservations.length > 0) {
         return res
           .status(400)
           .json({ message: "Ya tienes una reserva realizada." });

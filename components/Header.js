@@ -75,7 +75,6 @@ const Header = () => {
                 aria-haspopup="true"
               >
                 Aeronáutica
-                <i className="bx bx-chevron-down"></i>
               </button>
             </div>
 
@@ -90,7 +89,7 @@ const Header = () => {
                 <div role="none">
                   <Link
                     href="/aeronautica"
-                    className="text-gray-700 hover:bg-gray-100 block px-4 py-3 text-sm"
+                    className="text-gray-700 hover:bg-gray-100 rounded-tl-md rounded-tr-md block px-4 py-3 text-md"
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-0"
@@ -99,7 +98,7 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/aeronautica/reservas"
-                    className="text-gray-700 hover:bg-gray-100 block px-4 py-3 text-sm"
+                    className="text-gray-700 hover:bg-gray-100 rounded-bl-md rounded-br-md block px-4 py-3 text-md"
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-1"
