@@ -29,7 +29,7 @@ export default function FlyReservationPage() {
                 className="text-sm md:text-xl"
                 style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.7)" }}
               >
-                ¿Quieres hacer una reserva?
+                ¿Quiéres hacer una reserva?
               </p>
               <p
                 className="text-sm md:text-lg"
@@ -55,7 +55,7 @@ export default function FlyReservationPage() {
                 className="my-2 text-4xl sm:text-6xl"
                 style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.7)" }}
               >
-                Consultar una Reserva
+                Consultár una Reserva
               </h3>
               <p
                 className="text-sm md:text-xl"
@@ -67,7 +67,7 @@ export default function FlyReservationPage() {
                 className="text-sm md:text-lg text-center"
                 style={{ textShadow: "4px 4px 8px rgba(0, 0, 0, 0.7)" }}
               >
-                Ingresa aquí para consultar el horario y otras reservas
+                Ingresa aquí para consultar el horario
               </p>
             </div>
           </Link>

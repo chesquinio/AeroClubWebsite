@@ -1,7 +1,7 @@
-import { BarLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 function Spinner() {
-  return <BarLoader color={"#3b82ff"} speedMultiplier={1} width={150} />;
+  return <ClipLoader color={"#fff"} speedMultiplier={1} size={20} />;
 }
 
 export default Spinner;

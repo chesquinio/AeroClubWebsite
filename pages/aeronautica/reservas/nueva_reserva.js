@@ -1,5 +1,5 @@
 import NoSsr from "@/components/NoSsr";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Calendar from "react-calendar";
 import { format, isEqual } from "date-fns";
@@ -42,7 +42,7 @@ export default function NewFlyReservationPage() {
       .post("/api/planeReservation", { name, document, day, time })
       .then((res) => {
         setMessage("Se ha realizado la reserva corrrectamente.");
-        router.push("/aeronautica");
+        router.push("/aeronautica/reservas");
       })
       .catch((err) => {
         setMessage(err.response.data.message);
@@ -63,7 +63,7 @@ export default function NewFlyReservationPage() {
     <NoSsr>
       <Header />
       <motion.div
-        className="flex justify-center items-center bg-white rounded-lg sm:mb-10 h-screen w-full sm:w-3/5 xl:w-2/5 2xl:w-1/3 mx-auto text-sm sm:text-base"
+        className="flex justify-center items-center bg-white rounded-lg pt-20 sm:mb-10 min-h-screen w-full sm:w-3/5 xl:w-2/5 2xl:w-1/3 mx-auto text-sm sm:text-base"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -106,7 +106,7 @@ export default function NewFlyReservationPage() {
               {times.length === 0 ? (
                 <section className="flex flex-col items-center">
                   <h3 className="text-3xl text-center font-light mb-6">
-                    No se ha encontrado ningun horario disponible
+                    No se ha encontrado ningún horario disponible
                   </h3>
                   <button
                     type="button"
@@ -121,7 +121,7 @@ export default function NewFlyReservationPage() {
                   <h3 className="text-3xl text-center font-light mb-6">
                     Horarios disponibles:
                   </h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 text-center gap-5">
+                  <div className="grid grid-cols-1 text-center gap-3">
                     {times?.map((time, i) => (
                       <button
                         key={`time-${i}`}
@@ -132,7 +132,7 @@ export default function NewFlyReservationPage() {
                             dateTime: time,
                           }))
                         }
-                        className={`py-8 px-4 rounded text-xl ${
+                        className={`py-2 px-4 rounded text-xl ${
                           isEqual(date.dateTime, time)
                             ? "bg-blue-400 text-white"
                             : "bg-whiteblue text-gray-800 hover:bg-blue-200 hover:text-white"
@@ -222,7 +222,7 @@ export default function NewFlyReservationPage() {
               <h4 className="mb-4 text-xl">¿Quiéres confirmár la reserva?</h4>
               <div className="grid grid-cols-2 text-center">
                 <span className="text-lg font-light">
-                  Dia: <b>{date.dateTime.toLocaleString().split(", ")[0]}</b>
+                  Día: <b>{date.dateTime.toLocaleString().split(", ")[0]}</b>
                 </span>
                 <span className="text-lg font-light">
                   Hora: <b>{date.dateTime.toLocaleString().split(", ")[1]}</b>

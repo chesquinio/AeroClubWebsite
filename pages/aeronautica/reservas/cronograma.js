@@ -10,8 +10,6 @@ export default function ListFlyReservationPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
-  console.log(reservation);
-
   const handleDocument = (event) => {
     const inputValue = event.target.value.replace(/[^0-9]/g, "");
     setDocument(Number(inputValue));
@@ -20,18 +18,25 @@ export default function ListFlyReservationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      setMessage(null);
+    setLoading(true);
+    setMessage(null);
+    setReservation(null);
 
-      const res = await axios.get(`/api/planeReservation/${document}`);
-      const { reservation } = await res.data;
-      setReservation(reservation);
-    } catch (error) {
-      setMessage(error.response.data.message);
-    } finally {
-      setLoading(false);
-    }
+    await axios
+      .get(`/api/planeReservation/${document}`)
+      .then((res) => {
+        if (!res.data.reservation) {
+          setMessage("No se ha encontrado una reserva con este documento");
+        } else {
+          setReservation(res.data.reservation);
+        }
+      })
+      .catch((err) => {
+        setMessage(err.response.data.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <>
@@ -67,7 +72,7 @@ export default function ListFlyReservationPage() {
             </button>
           </form>
         </section>
-        {reservation ? (
+        {reservation && (
           <section className="flex justify-center items-center">
             <div className="flex flex-col justify-center items-center rounded bg-gray-200 py-5 w-96">
               <h4 className="text-2xl mb-3">{reservation.name}</h4>
@@ -76,8 +81,6 @@ export default function ListFlyReservationPage() {
               </span>
             </div>
           </section>
-        ) : (
-          <section>No se encontro</section>
         )}
       </main>
       <Footer />

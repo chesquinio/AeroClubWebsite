@@ -30,12 +30,8 @@
 /* Custom Navigation Styles */
 @media screen and (max-width: 500px) {
   .react-calendar__navigation__prev2-button,
-  .react-calendar__navigation__prev-button {
+  .react-calendar__navigation__next2-button {
     display: none;
-  }
-  .react-calendar__navigation__label {
-    padding-left: 1rem;
-    text-align: left;
   }
 }
 

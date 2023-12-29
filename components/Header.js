@@ -3,9 +3,9 @@ import Link from "next/link";
 import { isAuthenticated } from "@/lib/auth";
 
 const Header = () => {
-  const [isLogged, setIsLogged] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [options, setOptions] = useState(false);
 
   const handleScroll = () => {
     if (window.scrollY > 30) {
@@ -22,26 +22,16 @@ const Header = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setIsLogged(isAuthenticated());
-  }, []);
-
-  const clearAuthToken = () => {
-    localStorage.removeItem("token");
-  };
-
-  const handleLogout = () => {
-    clearAuthToken();
-
-    window.location.href = "/";
-  };
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const showOptions = () => {
+    setOptions(!options);
   };
 
   const headerStyle = `fixed z-10 top-0 left-0 w-full flex justify-between items-center transition-all duration-400 px-4 bg-white
@@ -74,9 +64,52 @@ const Header = () => {
           <Link href={"/noticias"} className={linkStyle}>
             Noticias
           </Link>
-          <Link href={"/aeronautica"} className={linkStyle}>
-            Aeronáutica
-          </Link>
+          <div className="relative inline-block text-left">
+            <div>
+              <button
+                type="button"
+                onClick={showOptions}
+                className={`${linkStyle} inline-flex items-center gap-x-1.5`}
+                id="menu-button"
+                aria-expanded="true"
+                aria-haspopup="true"
+              >
+                Aeronáutica
+                <i className="bx bx-chevron-down"></i>
+              </button>
+            </div>
+
+            {options && (
+              <div
+                className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                role="menu"
+                aria-orientation="vertical"
+                aria-labelledby="menu-button"
+                tabindex="-1"
+              >
+                <div role="none">
+                  <Link
+                    href="/aeronautica"
+                    className="text-gray-700 hover:bg-gray-100 block px-4 py-3 text-sm"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-0"
+                  >
+                    Principal
+                  </Link>
+                  <Link
+                    href="/aeronautica/reservas"
+                    className="text-gray-700 hover:bg-gray-100 block px-4 py-3 text-sm"
+                    role="menuitem"
+                    tabindex="-1"
+                    id="menu-item-1"
+                  >
+                    Reservas
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
           <Link href={"/tenis"} className={linkStyle}>
             Tenis
           </Link>
@@ -185,17 +218,40 @@ const Header = () => {
               </div>
             </div>
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
-              <Link
-                href={"/aeronautica"}
-                className="block py-2 w-full text-xl text-gray-600 ml-5"
-                onClick={closeMenu}
+              <button
+                className="block py-2 text-left w-full text-xl text-gray-600 ml-5"
+                onClick={showOptions}
               >
                 Aeronáutica
-              </Link>
+              </button>
               <div className="flex justify-center items-center mr-2 text-lg text-gray-600">
                 <i class="bx bx-plus"></i>
               </div>
             </div>
+            {options && (
+              <div role="none">
+                <Link
+                  href="/aeronautica"
+                  onClick={closeMenu}
+                  className="text-gray-700 hover:bg-gray-100 block py-2 pl-10 pr-4 text-left w-full text-md"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-0"
+                >
+                  Principal
+                </Link>
+                <Link
+                  href="/aeronautica/reservas"
+                  onClick={closeMenu}
+                  className="text-gray-700 hover:bg-gray-100 block py-2 pl-10 pr-4 text-left w-full text-md"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="menu-item-1"
+                >
+                  Reservas
+                </Link>
+              </div>
+            )}
             <div className="flex justify-between rounded hover:bg-gray-100 transition">
               <Link
                 href={"/tenis"}
