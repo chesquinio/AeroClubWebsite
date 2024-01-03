@@ -217,7 +217,7 @@ function Test({ campingData }) {
                 <div className="flex flex-col md:flex-row gap-3 mb-4">
                   <div className="md:w-1/2">
                     <label className="block text-gray-700 font-normal mb-1">
-                      Turno
+                      Turno colonia
                     </label>
                     <Controller
                       name="turno"
