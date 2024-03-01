@@ -4,7 +4,7 @@ import { PlaneReservation } from "@/model/PlaneReservation";
 
 export default async function handle(req, res) {
   if (req.method === "POST") {
-    const { name, document, day, time } = req.body;
+    const { name, document, day, time, selectedPlane } = req.body;
 
     try {
       await mongooseConnect();
@@ -26,6 +26,7 @@ export default async function handle(req, res) {
         document,
         day,
         time,
+        plane: selectedPlane,
       });
 
       await newReservation.save();
@@ -39,12 +40,9 @@ export default async function handle(req, res) {
 
     try {
       await mongooseConnect();
-
       const reservations = await PlaneReservation.find({ day });
 
-      return res.status(200).json({
-        reservations,
-      });
+      return res.status(200).json(reservations);
     } catch (error) {
       return res
         .status(500)

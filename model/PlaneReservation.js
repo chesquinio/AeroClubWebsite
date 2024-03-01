@@ -5,6 +5,7 @@ const PlaneReservationSchema = new Schema({
   document: { type: Number, required: true },
   day: { type: String, required: true },
   time: { type: String, required: true },
+  plane: { type: String, required: true },
 });
 
 export const PlaneReservation =

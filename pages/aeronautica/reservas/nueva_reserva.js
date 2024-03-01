@@ -11,8 +11,21 @@ import { getPlaneReservations } from "@/lib/getReservations";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const planes = [
+  { id: 1, name: "LV - OOH - Cessna 172" },
+  { id: 2, name: "LV - OBI - Cessna 152" },
+  { id: 3, name: "LV S 101 - Tecnam P 2002 Sierra" },
+  { id: 4, name: "LV S 145 - Tecnam P 2002 MKII" },
+];
+
 export default function NewFlyReservationPage() {
-  const [date, setDate] = useState({});
+  const [selectedPlane, setSelectedPlane] = useState(planes[1].name);
+  const [date, setDate] = useState({
+    startTime: null,
+    endTime: null,
+    justDate: null,
+  });
+  const endTimes = useState([]);
   const [reservations, setReservations] = useState([]);
   const [name, setName] = useState("");
   const [document, setDocument] = useState(null);
@@ -20,11 +33,18 @@ export default function NewFlyReservationPage() {
   const [message, setMessage] = useState(null);
   const router = useRouter();
 
-  const times = getTimes({ justDate: date.justDate, reservations });
+  const times = getTimes({
+    date: date.justDate,
+    reservations,
+  });
 
   const goBack = () => {
     if (currentForm === 2) {
-      setDate({});
+      setDate({
+        startTime: null,
+        endTime: null,
+        justDate: null,
+      });
     }
     if (currentForm > 1) {
       setCurrentForm(currentForm - 1);
@@ -35,11 +55,16 @@ export default function NewFlyReservationPage() {
     e.preventDefault();
     setCurrentForm(currentForm - 1);
 
-    const day = date.dateTime.toLocaleString().split(", ")[0];
-    const time = date.dateTime.toLocaleString().split(", ")[1];
+    const day = date.justDate.toLocalDateString();
 
     await axios
-      .post("/api/planeReservation", { name, document, day, time })
+      .post("/api/planeReservation", {
+        name,
+        document,
+        day,
+        time,
+        selectedPlane,
+      })
       .then((res) => {
         setMessage("Se ha realizado la reserva corrrectamente.");
         router.push("/aeronautica/reservas");
@@ -82,6 +107,29 @@ export default function NewFlyReservationPage() {
           {currentForm === 1 && (
             <section>
               <h1 className="font-light text-center text-3xl mb-6">
+                Elije un avión:
+              </h1>
+              <div className="w-full flex flex-col gap-3 mb-6">
+                {planes.map((plane) => (
+                  <div
+                    key={plane.id}
+                    onClick={() => setSelectedPlane(plane.name)}
+                    className={`py-2 px-4 rounded text-xl ${
+                      plane.name === selectedPlane
+                        ? "bg-blue-400 text-white"
+                        : "bg-whiteblue text-gray-800 hover:bg-blue-200 hover:text-white"
+                    } transition duration-300 ease-in-out`}
+                  >
+                    {plane.name}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {currentForm === 2 && (
+            <section>
+              <h1 className="font-light text-center text-3xl mb-6">
                 Elije una fecha:
               </h1>
               <div className="w-full justify-center items-center">
@@ -89,19 +137,23 @@ export default function NewFlyReservationPage() {
                   minDate={new Date()}
                   view="month"
                   onClickDay={async (date) => {
+                    const day = new Date(date).toLocaleDateString();
+
                     setDate((prev) => ({ ...prev, justDate: date }));
-                    const day = format(date, "dd/MM/yyyy");
-                    const reservationsByDay = await getPlaneReservations({
-                      day,
-                    });
-                    setReservations(reservationsByDay);
+
+                    const reservationsByDayAndPlane =
+                      await getPlaneReservations({
+                        day,
+                        plane: selectedPlane,
+                      });
+                    setReservations(reservationsByDayAndPlane);
                   }}
                 />
               </div>
             </section>
           )}
 
-          {currentForm === 2 && (
+          {currentForm === 3 && (
             <>
               {times.length === 0 ? (
                 <section className="flex flex-col items-center">
@@ -117,37 +169,70 @@ export default function NewFlyReservationPage() {
                   </button>
                 </section>
               ) : (
-                <section>
-                  <h3 className="text-3xl text-center font-light mb-6">
-                    Horarios disponibles:
+                <section className="mb-4">
+                  <h3 className="text-2xl text-center font-light mb-6">
+                    Selecciona un intérvalo de vuelo:
                   </h3>
-                  <div className="grid grid-cols-1 text-center gap-3">
-                    {times?.map((time, i) => (
-                      <button
-                        key={`time-${i}`}
-                        type="button"
-                        onClick={() =>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                      <h4 className="text-lg mb-3">Hora de comienzo:</h4>
+                      <select
+                        onChange={(e) => {
                           setDate((prev) => ({
                             ...prev,
-                            dateTime: time,
-                          }))
-                        }
-                        className={`py-2 px-4 rounded text-xl ${
-                          isEqual(date.dateTime, time)
-                            ? "bg-blue-400 text-white"
-                            : "bg-whiteblue text-gray-800 hover:bg-blue-200 hover:text-white"
-                        } transition duration-300 ease-in-out`}
+                            startTime: e.target.value,
+                          }));
+                        }}
+                        className="bg-gray-100 w-full rounded-lg text-lg py-2 px-4 overflow-y-auto"
                       >
-                        {format(time, "kk:mm")}
-                      </button>
-                    ))}
+                        {times?.map((time, i) => (
+                          <option
+                            key={`time-${i}`}
+                            value={time.toLocaleTimeString()}
+                            className={`py-2 px-4 rounded text-xl ${
+                              isEqual(date.startTime, time)
+                                ? "bg-blue-400 text-white"
+                                : "bg-whiteblue text-gray-800 hover:bg-blue-200 hover:text-white"
+                            } transition duration-300 ease-in-out`}
+                          >
+                            {format(time, "kk:mm")}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <h4 className="text-lg mb-3">Hora de finalización:</h4>
+                      <select
+                        onChange={(e) => {
+                          setDate((prev) => ({
+                            ...prev,
+                            endTime: e.target.value,
+                          }));
+                        }}
+                        className="bg-gray-100 w-full rounded-lg text-lg py-2 px-4 overflow-y-auto"
+                      >
+                        {times?.map((time, i) => (
+                          <option
+                            key={`time-${i}`}
+                            value={time.toLocaleTimeString()}
+                            className={`py-2 px-4 rounded text-xl ${
+                              isEqual(date.endTime, time)
+                                ? "bg-blue-400 text-white"
+                                : "bg-whiteblue text-gray-800 hover:bg-blue-200 hover:text-white"
+                            } transition duration-300 ease-in-out`}
+                          >
+                            {format(time, "kk:mm")}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </section>
               )}
             </>
           )}
 
-          {currentForm >= 3 && (
+          {currentForm >= 4 && (
             <section>
               <h3 className="text-3xl text-center font-light mb-6">
                 Datos Personales:
@@ -183,6 +268,18 @@ export default function NewFlyReservationPage() {
             <button
               type="button"
               onClick={() => setCurrentForm(currentForm + 1)}
+              disabled={!selectedPlane}
+              className={`text-white w-full text-center text-xl py-3 rounded my-4 ${
+                !selectedPlane ? "bg-blue-200" : "bg-blue-400"
+              }`}
+            >
+              Siguiente
+            </button>
+          )}
+          {currentForm === 2 && (
+            <button
+              type="button"
+              onClick={() => setCurrentForm(currentForm + 1)}
               disabled={!date.justDate}
               className={`text-white w-full text-center text-xl py-3 rounded my-4 ${
                 !date.justDate ? "bg-blue-200" : "bg-blue-400"
@@ -191,19 +288,19 @@ export default function NewFlyReservationPage() {
               Siguiente
             </button>
           )}
-          {currentForm === 2 && times.length !== 0 && (
+          {currentForm === 3 && times.length !== 0 && (
             <button
               type="button"
               onClick={() => setCurrentForm(currentForm + 1)}
-              disabled={!date.dateTime}
+              disabled={!date.endTime}
               className={`text-white w-full text-center text-xl py-3 rounded my-4 ${
-                !date.dateTime ? "bg-blue-200" : "bg-blue-400"
+                !date.endTime ? "bg-blue-200" : "bg-blue-400"
               }`}
             >
               Siguiente
             </button>
           )}
-          {currentForm > 2 && (
+          {currentForm > 3 && (
             <button
               type="button"
               onClick={() => setCurrentForm(currentForm + 1)}
@@ -217,10 +314,13 @@ export default function NewFlyReservationPage() {
               Enviar
             </button>
           )}
-          {currentForm === 4 && (
+          {currentForm === 5 && (
             <Modal>
               <h4 className="mb-4 text-xl">¿Quiéres confirmár la reserva?</h4>
               <div className="grid grid-cols-2 text-center">
+                <span className="col-span-2 text-xl font-light mb-2">
+                  Avión: <b>{selectedPlane}</b>
+                </span>
                 <span className="text-lg font-light">
                   Día: <b>{date.dateTime.toLocaleString().split(", ")[0]}</b>
                 </span>
