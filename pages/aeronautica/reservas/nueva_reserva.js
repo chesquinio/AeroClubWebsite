@@ -1,8 +1,8 @@
 import NoSsr from "@/components/NoSsr";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Calendar from "react-calendar";
-import { format, isEqual } from "date-fns";
+import { format, isAfter, isEqual, isExists } from "date-fns";
 import { getTimes } from "@/lib/getTime";
 import axios from "axios";
 import Modal from "@/components/Modal";
@@ -25,7 +25,7 @@ export default function NewFlyReservationPage() {
     endTime: null,
     justDate: null,
   });
-  const endTimes = useState([]);
+  const [endTimes, setEndTimes] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [name, setName] = useState("");
   const [document, setDocument] = useState(null);
@@ -33,10 +33,31 @@ export default function NewFlyReservationPage() {
   const [message, setMessage] = useState(null);
   const router = useRouter();
 
-  const times = getTimes({
-    date: date.justDate,
-    reservations,
-  });
+  useEffect(() => {
+    const finishTimes = [];
+    let lastTime = [];
+    times?.map((time) => {
+      if (
+        isEqual(time, new Date(date.startTime)) ||
+        (isAfter(time, new Date(date.startTime)) &&
+          time.getHours() - 1 === lastTime[0]) ||
+        (time.getHours() === lastTime[0] && time.getMinutes() !== lastTime[1])
+      ) {
+        lastTime = [time.getHours(), time.getMinutes()];
+        finishTimes.push(time);
+      }
+    });
+    setEndTimes(finishTimes);
+  }, [date.startTime]);
+
+  const allTimes = () => {
+    const timesAvailable = getTimes({
+      date: date.justDate,
+      reservations,
+    });
+    return timesAvailable;
+  };
+  const times = allTimes();
 
   const goBack = () => {
     if (currentForm === 2) {
@@ -55,14 +76,17 @@ export default function NewFlyReservationPage() {
     e.preventDefault();
     setCurrentForm(currentForm - 1);
 
-    const day = date.justDate.toLocalDateString();
+    const day = new Date(date.justDate).toLocaleDateString();
+    const start = date.startTime;
+    const end = date.endTime;
 
     await axios
       .post("/api/planeReservation", {
         name,
         document,
         day,
-        time,
+        start,
+        end,
         selectedPlane,
       })
       .then((res) => {
@@ -188,7 +212,7 @@ export default function NewFlyReservationPage() {
                         {times?.map((time, i) => (
                           <option
                             key={`time-${i}`}
-                            value={time.toLocaleTimeString()}
+                            value={time}
                             className={`py-2 px-4 rounded text-xl ${
                               isEqual(date.startTime, time)
                                 ? "bg-blue-400 text-white"
@@ -211,10 +235,10 @@ export default function NewFlyReservationPage() {
                         }}
                         className="bg-gray-100 w-full rounded-lg text-lg py-2 px-4 overflow-y-auto"
                       >
-                        {times?.map((time, i) => (
+                        {endTimes?.map((time, i) => (
                           <option
                             key={`time-${i}`}
-                            value={time.toLocaleTimeString()}
+                            value={time}
                             className={`py-2 px-4 rounded text-xl ${
                               isEqual(date.endTime, time)
                                 ? "bg-blue-400 text-white"
@@ -317,16 +341,20 @@ export default function NewFlyReservationPage() {
           {currentForm === 5 && (
             <Modal>
               <h4 className="mb-4 text-xl">¿Quiéres confirmár la reserva?</h4>
-              <div className="grid grid-cols-2 text-center">
-                <span className="col-span-2 text-xl font-light mb-2">
+              <div className="flex flex-col justify-center items-center">
+                <span className="text-xl font-light mb-2">
                   Avión: <b>{selectedPlane}</b>
                 </span>
-                <span className="text-lg font-light">
-                  Día: <b>{date.dateTime.toLocaleString().split(", ")[0]}</b>
-                </span>
-                <span className="text-lg font-light">
-                  Hora: <b>{date.dateTime.toLocaleString().split(", ")[1]}</b>
-                </span>
+                <div className="flex flex-col p-4 bg-gray-100 rounded-lg">
+                  <span className="text-lg font-light">
+                    Día: <b>{new Date(date.justDate).toLocaleDateString()}</b>
+                  </span>
+                  <span className="text-lg font-light">
+                    Hora: De{" "}
+                    <b>{new Date(date.startTime).toLocaleTimeString()}</b> hasta{" "}
+                    <b>{new Date(date.endTime).toLocaleTimeString()}</b>
+                  </span>
+                </div>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-4">
                 <button

@@ -4,7 +4,7 @@ import { PlaneReservation } from "@/model/PlaneReservation";
 
 export default async function handle(req, res) {
   if (req.method === "POST") {
-    const { name, document, day, time, selectedPlane } = req.body;
+    const { name, document, day, start, end, selectedPlane } = req.body;
 
     try {
       await mongooseConnect();
@@ -25,7 +25,8 @@ export default async function handle(req, res) {
         name,
         document,
         day,
-        time,
+        start,
+        end,
         plane: selectedPlane,
       });
 
