@@ -7,6 +7,7 @@ const PlaneReservationSchema = new Schema({
   start: { type: Date, required: true },
   end: { type: Date, required: true },
   plane: { type: String, required: true },
+  active: { type: Boolean, default: true },
 });
 
 export const PlaneReservation =

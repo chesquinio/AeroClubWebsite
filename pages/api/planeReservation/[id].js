@@ -1,4 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
+import updateStatusReservations from "@/lib/updateStatusReservations";
 import { PlaneReservation } from "@/model/PlaneReservation";
 
 export default async function handle(req, res) {
@@ -11,13 +12,32 @@ export default async function handle(req, res) {
 
     try {
       await mongooseConnect();
-      const reservation = await PlaneReservation.find({ document: id });
 
-      return res.status(200).json({ reservation });
+      await updateStatusReservations();
+      const activeReservation = await PlaneReservation.find({
+        document: id,
+        active: true,
+      });
+      const inactiveReservations = await PlaneReservation.find({
+        document: id,
+        active: false,
+      })
+        .sort({ createdAt: -1 })
+        .limit(5);
+      console.log(activeReservation, inactiveReservations);
+      if (activeReservation || inactiveReservations) {
+        return res
+          .status(200)
+          .json({ activeReservation, inactiveReservations });
+      } else {
+        return res.status(400).json({
+          message: "No se ha encontrado una reserva con este documento.",
+        });
+      }
     } catch (error) {
       return res
         .status(500)
-        .json({ message: "No se pudo encontrar la reserva." });
+        .json({ message: "Ha ocurrido un error al buscar la reserva." });
     }
   } else if (req.method === "DELETE") {
     const { id } = req.query;

@@ -1,14 +1,15 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Spinner from "@/components/Spinner";
-import { filterReservations } from "@/lib/filterReservations";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { format } from "date-fns";
 
 export default function ListFlyReservationPage() {
   const [document, setDocument] = useState(null);
-  const [reservation, setReservation] = useState(null);
+  const [reservation, setReservation] = useState();
+  const [inactiveReservation, setInactiveReservation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const router = useRouter();
@@ -24,15 +25,13 @@ export default function ListFlyReservationPage() {
     setLoading(true);
     setMessage(null);
     setReservation(null);
+    setInactiveReservation(null);
 
     await axios
       .get(`/api/planeReservation/${document}`)
       .then((res) => {
-        if (!res.data.reservation) {
-          setMessage("No se ha encontrado una reserva con este documento");
-        } else {
-          setReservation(res.data.reservation);
-        }
+        setReservation(res.data.activeReservation[0]);
+        setInactiveReservation(res.data.inactiveReservations);
       })
       .catch((err) => {
         setMessage(err.response.data.message);
@@ -54,23 +53,22 @@ export default function ListFlyReservationPage() {
       });
   };
 
-  const { previousReservations, pendingReservations } = reservation
-    ? filterReservations(reservation)
-    : { previousReservations: [], pendingReservations: [] };
-
   return (
     <>
       <Header />
-      <main className="h-screen pt-28 px-5">
-        <section className="flex flex-col justify-center items-center">
+      <main className="min-h-screen pt-28 px-5">
+        <section className="flex flex-col justify-center items-center md:max-w-3xl w-full mx-auto">
           <h2 className="text-3xl text-gray-700 font-light text-center mb-5">
             Consulte su reserva:
           </h2>
-          <form onSubmit={handleSubmit} className="flex flex-col">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col w-full md:max-w-xl"
+          >
             <label id="documento" className="text-gray-500">
               Documento:
             </label>
-            <div className="shadow-sm shadow-gray-500 sm:w-96 px-4 text-lg mt-4">
+            <div className="shadow-sm shadow-gray-500  px-4 text-lg mt-4">
               <i class="bx bx-search"></i>
               <input
                 id="documento"
@@ -94,49 +92,63 @@ export default function ListFlyReservationPage() {
             </button>
           </form>
         </section>
-        {pendingReservations.length > 0 ? (
-          <section className="flex flex-col justify-center items-center mt-4 gap-4">
-            <div className="flex flex-col justify-center items-center rounded bg-gray-200 shadow-sm shadow-gray-500 py-5 w-96">
-              <h4 className="text-2xl mb-3">{pendingReservations[0].name}</h4>
-              <span className="text-lg text-gray-600">
-                {pendingReservations[0].time} | {pendingReservations[0].day}
-              </span>
+        {reservation ? (
+          <section className="w-full md:max-w-xl mx-auto my-10 gap-4">
+            <div className="flex flex-col justify-center items-center rounded bg-gray-200 shadow-sm shadow-gray-500 py-5 mb-4">
+              <h4 className="text-2xl mb-3">{reservation.name}</h4>
+              <p className="text-lg md:text-xl text-center text-gray-600">
+                Avión: <b>{reservation.plane}</b>
+              </p>
+              <p className="text-lg text-gray-600">
+                Día: <b>{reservation.day}</b>
+              </p>
+              <p className="text-lg text-gray-600">
+                De <b>{format(new Date(reservation.start), "HH:mm")}</b> hasta{" "}
+                <b>{format(new Date(reservation.end), "HH:mm")}</b>
+              </p>
             </div>
-            <div className="flex w-96">
-              <button
-                type="button"
-                onClick={() => deleteReservation(pendingReservations[0]._id)}
-                className="bg-red-500 hover:bg-red-600 transition-all rounded text-white w-full py-2 px-4"
-              >
-                Eliminar reserva
-              </button>
-            </div>
+
+            <button
+              type="button"
+              onClick={() => deleteReservation(reservation._id)}
+              className="bg-red-500 hover:bg-red-600 transition-all rounded text-white w-full py-2 px-4"
+            >
+              Eliminar reserva
+            </button>
           </section>
         ) : (
-          <section className="flex flex-col justify-center items-center mt-4">
-            <div className="w-96 bg-gray-200 rounded">
+          <section className="w-full md:max-w-xl mx-auto my-10">
+            <div className=" bg-gray-200 rounded">
               <h4 className="px-4 py-4 text-lg text-center">
-                No se encuentran reservas actuales
+                No se encuentran reservas activas
               </h4>
             </div>
           </section>
         )}
-        {previousReservations.length > 0 && (
-          <section className="flex flex-col justify-center items-center mt-10 mb-6 gap-2">
-            <div className="w-96">
-              <h5 className="text-lg text-gray-600 text-left">
-                Reservas Anteriores
-              </h5>
-            </div>
-            {previousReservations.map((prevRes) => (
-              <div
-                key={prevRes._id}
-                className="flex flex-col justify-center items-center rounded bg-gray-200 shadow-sm shadow-gray-500 py-2 w-96"
-              >
-                <span className="text-lg text-gray-600">
-                  {prevRes.time} | {prevRes.day}
-                </span>
-              </div>
+        {inactiveReservation && (
+          <section className="flex flex-col gap-4 mx-auto w-full md:max-w-3xl py-10">
+            <h4 className="text-xl text-gray-800">Reservas pasadas</h4>
+            {inactiveReservation.map((res) => (
+              <>
+                <div className="flex flex-col md:flex-row justify-between gap-5 items-center py-3 px-4 rounded-lg bg-gray-100 ">
+                  <p className="text-md text-gray-600">
+                    Día: <span className="text-gray-800">{res.day}</span>
+                  </p>
+                  <p className="text-md text-gray-600">
+                    Avión: <span className="text-gray-800">{res.plane}</span>
+                  </p>
+                  <p className="text-md text-gray-600">
+                    De{" "}
+                    <span className="text-gray-800">
+                      {format(new Date(res.start), "HH:mm")}
+                    </span>{" "}
+                    hasta{" "}
+                    <span className="text-gray-800">
+                      {format(new Date(res.end), "HH:mm")}
+                    </span>
+                  </p>
+                </div>
+              </>
             ))}
           </section>
         )}

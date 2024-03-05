@@ -18,15 +18,24 @@ const planes = [
   { id: 4, name: "LV S 145 - Tecnam P 2002 MKII" },
 ];
 
+const allTimes = ({ date, reservations }) => {
+  const timesAvailable = getTimes({
+    date: date.justDate,
+    reservations,
+  });
+  return timesAvailable;
+};
+
 export default function NewFlyReservationPage() {
   const [selectedPlane, setSelectedPlane] = useState(planes[1].name);
+  const [reservations, setReservations] = useState([]);
   const [date, setDate] = useState({
     startTime: null,
     endTime: null,
     justDate: null,
   });
+  const times = allTimes({ date, reservations });
   const [endTimes, setEndTimes] = useState([]);
-  const [reservations, setReservations] = useState([]);
   const [name, setName] = useState("");
   const [document, setDocument] = useState(null);
   const [currentForm, setCurrentForm] = useState(1);
@@ -50,15 +59,6 @@ export default function NewFlyReservationPage() {
     setEndTimes(finishTimes);
   }, [date.startTime]);
 
-  const allTimes = () => {
-    const timesAvailable = getTimes({
-      date: date.justDate,
-      reservations,
-    });
-    return timesAvailable;
-  };
-  const times = allTimes();
-
   const goBack = () => {
     if (currentForm === 2) {
       setDate({
@@ -68,6 +68,7 @@ export default function NewFlyReservationPage() {
       });
     }
     if (currentForm > 1) {
+      setMessage(null);
       setCurrentForm(currentForm - 1);
     }
   };
@@ -131,7 +132,7 @@ export default function NewFlyReservationPage() {
           {currentForm === 1 && (
             <section>
               <h1 className="font-light text-center text-3xl mb-6">
-                Elije un avión:
+                Elija un avión:
               </h1>
               <div className="w-full flex flex-col gap-3 mb-6">
                 {planes.map((plane) => (
@@ -154,7 +155,7 @@ export default function NewFlyReservationPage() {
           {currentForm === 2 && (
             <section>
               <h1 className="font-light text-center text-3xl mb-6">
-                Elije una fecha:
+                Elija una fecha:
               </h1>
               <div className="w-full justify-center items-center">
                 <Calendar
@@ -199,7 +200,9 @@ export default function NewFlyReservationPage() {
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                      <h4 className="text-lg mb-3">Hora de comienzo:</h4>
+                      <h4 className="text-lg text-gray-800 mb-3">
+                        Hora de comienzo:
+                      </h4>
                       <select
                         onChange={(e) => {
                           setDate((prev) => ({
@@ -225,7 +228,9 @@ export default function NewFlyReservationPage() {
                       </select>
                     </div>
                     <div>
-                      <h4 className="text-lg mb-3">Hora de finalización:</h4>
+                      <h4 className="text-lg text-gray-800 mb-3">
+                        Hora de finalización:
+                      </h4>
                       <select
                         onChange={(e) => {
                           setDate((prev) => ({
@@ -233,6 +238,7 @@ export default function NewFlyReservationPage() {
                             endTime: e.target.value,
                           }));
                         }}
+                        disabled={!date.startTime}
                         className="bg-gray-100 w-full rounded-lg text-lg py-2 px-4 overflow-y-auto"
                       >
                         {endTimes?.map((time, i) => (
@@ -285,6 +291,10 @@ export default function NewFlyReservationPage() {
                   />
                 </div>
               </div>
+              <p className="text-sm text-gray-700 mt-3">
+                Recuerde que si ya posee una reserva o ha tenido una reserva
+                este día, no podrá realizar una nueva reserva.
+              </p>
             </section>
           )}
           {message && <p className="text-gray-600 my-2">{message}</p>}
@@ -316,7 +326,7 @@ export default function NewFlyReservationPage() {
             <button
               type="button"
               onClick={() => setCurrentForm(currentForm + 1)}
-              disabled={!date.endTime}
+              disabled={!date.endTime || !date.startTime}
               className={`text-white w-full text-center text-xl py-3 rounded my-4 ${
                 !date.endTime ? "bg-blue-200" : "bg-blue-400"
               }`}
