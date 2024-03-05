@@ -14,7 +14,7 @@ export default function FlyReservationPage() {
             className="block relative w-full h-full rounded-3xl overflow-hidden transition-all group shadow-md shadow-gray-500"
           >
             <img
-              src="https://aeroclub-website.s3.amazonaws.com/1694202333440.png"
+              src="/avion-reservas-1.webp"
               alt="TECNAM P2002 MKII"
               className="w-full h-full object-cover object-center transition-transform transform scale-100 lg:group-hover:scale-105"
             />
@@ -46,7 +46,7 @@ export default function FlyReservationPage() {
             className="block relative w-full h-full rounded-3xl overflow-hidden transition-all group shadow-md shadow-gray-500"
           >
             <img
-              src="https://aeroclub-website.s3.amazonaws.com/1694193835572.png"
+              src="/avion-reservas-2.webp"
               alt="CESSNA R172K HAWK XP II"
               className="w-full h-full object-cover object-center transition-transform transform scale-100 lg:group-hover:scale-105"
             />

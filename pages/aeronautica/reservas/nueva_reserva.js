@@ -2,7 +2,7 @@ import NoSsr from "@/components/NoSsr";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Calendar from "react-calendar";
-import { format, isAfter, isEqual, isExists } from "date-fns";
+import { format, isAfter, isEqual } from "date-fns";
 import { getTimes } from "@/lib/getTime";
 import axios from "axios";
 import Modal from "@/components/Modal";
@@ -60,12 +60,18 @@ export default function NewFlyReservationPage() {
   }, [date.startTime]);
 
   const goBack = () => {
-    if (currentForm === 2) {
-      setDate({
+    if (currentForm <= 4) {
+      setDate((prevState) => ({
+        ...prevState,
         startTime: null,
         endTime: null,
+      }));
+    }
+    if (currentForm <= 3) {
+      setDate((prevState) => ({
+        ...prevState,
         justDate: null,
-      });
+      }));
     }
     if (currentForm > 1) {
       setMessage(null);
@@ -79,7 +85,8 @@ export default function NewFlyReservationPage() {
 
     const day = new Date(date.justDate).toLocaleDateString();
     const start = date.startTime;
-    const end = date.endTime;
+    const end = new Date(date.endTime);
+    end.setMinutes(end.getMinutes() - 30);
 
     await axios
       .post("/api/planeReservation", {
@@ -326,7 +333,7 @@ export default function NewFlyReservationPage() {
             <button
               type="button"
               onClick={() => setCurrentForm(currentForm + 1)}
-              disabled={!date.endTime || !date.startTime}
+              disabled={!date.endTime}
               className={`text-white w-full text-center text-xl py-3 rounded my-4 ${
                 !date.endTime ? "bg-blue-200" : "bg-blue-400"
               }`}
