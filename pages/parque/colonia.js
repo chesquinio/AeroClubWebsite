@@ -81,7 +81,7 @@ function CampingPage({ campingData }) {
               <div>
                 <span className="font-medium">• Turno mañana:</span>
                 <p>3 a 7 años: 9 a 12hs</p>
-                <p>8 a 14 años: 9:15 a 12:15hs</p>
+                <p>8 a 14 años: 9:20 a 12:20hs</p>
               </div>
               <div>
                 <span className="font-medium">• Turno tarde:</span>
@@ -97,7 +97,7 @@ function CampingPage({ campingData }) {
               Toda la <b>información</b> detallada y <b>precios</b> de la
               colonia se encuentran{" "}
               <a
-                href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/1700087731558.pdf"
+                href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/INFORMACI%C3%93N+IMPORTANTE+COLONIA+PER%C3%8DODO+2024_2025.pdf"
                 target="_blanck"
                 className="text-blue-500 underline"
               >
@@ -105,43 +105,25 @@ function CampingPage({ campingData }) {
               </a>
             </span>
           </div>
-          <div className="flex flex-col gap-8 mt-10">
-            <div>
+          <div className="flex flex-col gap-8 mt-4">
+            {/* <div>
               <h4 className="text-center text-xl font-medium mb-4 text-gray-700">
                 Cómo inscribirte siendo Socio
               </h4>
               <YouTube videoId={videoId} opts={opts} />
-            </div>
-            <div>
-              <h4 className="text-center text-xl font-medium mb-4 text-gray-700">
-                Cómo inscribirte <b>sin</b> ser Socio
-              </h4>
-              <div className="flex justify-center items-center h-full backdrop-blur-sm mt-2">
-                <a
-                  href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/1700249638823.pdf"
-                  target="_blanck"
-                  className="text-gray-600 text-xl py-2 px-4 text-center border-2 border-opacity-100 border-gray-500 md:border-opacity-0 hover:text-gray-900 hover:border-opacity-100 transition-all duration-500"
-                >
-                  Instructivo de Inscripción
-                </a>
-              </div>
-            </div>
+            </div> */}
           </div>
           <div>
-            <div className="w-full h-px bg-gray-600 my-5"></div>
-            <p>
-              Una vez realizado el pago, deberá acceder a la siguiente planilla
-              y completar los datos requeridos, es importante que esto se haga y
-              se envíe.
-            </p>
             <div className="flex justify-center items-center h-full backdrop-blur-sm mt-4">
-              <Link
-                href="/parque/colonia/planilla"
+              <a
+                target="_blanck"
+                href="https://docs.google.com/forms/d/e/1FAIpQLScTakpagkowM59fi-bZoJPwCnRFBYXRZLPUWm7-gX24lnJfQg/viewform"
                 className="text-gray-600 text-xl py-2 px-4 text-center border-2 border-opacity-100 border-gray-500 md:border-opacity-0 hover:text-gray-900 hover:border-opacity-100 transition-all duration-500"
               >
                 Planilla de Inscripción
-              </Link>
+              </a>
             </div>
+            <div className="w-full h-px bg-gray-600 my-5"></div>
           </div>
         </div>
       </section>
