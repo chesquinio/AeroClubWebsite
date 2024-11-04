@@ -8,10 +8,7 @@ function NotFound() {
     <>
       <Head>
         <title>404 Error | Aero Club Rafaela</title>
-        <meta
-          name="description"
-          content="Error 404 Not Found."
-        />
+        <meta name="description" content="Error 404 Not Found." />
       </Head>
       <Header />
       <div className="flex justify-center items-center h-screen w-full">
@@ -34,7 +31,7 @@ function NotFound() {
               href={"/"}
               className="font-light text-lg hover:text-moreblue transition-all"
             >
-              Volver al Inicio
+              Volver a la página principal
             </Link>
           </div>
         </div>
