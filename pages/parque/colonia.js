@@ -113,7 +113,7 @@ function CampingPage({ campingData }) {
               <YouTube videoId={videoId} opts={opts} />
             </div> */}
           </div>
-          <div>
+          {/* <div>
             <div className="flex justify-center items-center h-full backdrop-blur-sm mt-4">
               <a
                 target="_blanck"
@@ -124,7 +124,7 @@ function CampingPage({ campingData }) {
               </a>
             </div>
             <div className="w-full h-px bg-gray-600 my-5"></div>
-          </div>
+          </div> */}
         </div>
       </section>
       <Footer />
