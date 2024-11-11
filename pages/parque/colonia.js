@@ -16,8 +16,8 @@ function CampingPage({ campingData }) {
     }
   }, []);
 
-  const videoId = "jR733uv4XD0";
-
+  const videoId = "OJuJ_4LLvt8";
+  const videoId2 = "HFB7J1cirbo";
   const opts = {
     maxHeight: 450,
     width: "100%",
@@ -33,7 +33,7 @@ function CampingPage({ campingData }) {
       </Head>
       <Header />
       <section className="mt-24 mb-10 flex justify-center items-start min-h-screen">
-        <div className="bg-white rounded-lg shadow-lg px-4 sm:px-8 pb-6 mx-4 w-full sm:w-4/5 lg:w-1/2">
+        <div className="bg-white rounded-lg shadow-lg px-4 sm:px-8 pb-6 mx-4 w-full sm:w-4/5 lg:w-1/2 xl:w-[1000px]">
           <div className="h-96 my-6">
             <img
               className="object-cover w-full h-full rounded-md"
@@ -97,7 +97,7 @@ function CampingPage({ campingData }) {
               Toda la <b>información</b> detallada y <b>precios</b> de la
               colonia se encuentran{" "}
               <a
-                href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/INFORMACI%C3%93N+IMPORTANTE+COLONIA+PER%C3%8DODO+2024_2025.pdf"
+                href="https://aeroclub-website.s3.sa-east-1.amazonaws.com/INFORMACI%C3%93N+IMPORTANTE+COLONIA+PER%C3%8DODO+2024_2025(2_241111_072430.pdf"
                 target="_blanck"
                 className="text-blue-500 underline"
               >
@@ -105,15 +105,25 @@ function CampingPage({ campingData }) {
               </a>
             </span>
           </div>
-          <div className="flex flex-col gap-8 mt-4">
-            {/* <div>
+          <div className="flex flex-col gap-8 mt-8">
+            <div>
               <h4 className="text-center text-xl font-medium mb-4 text-gray-700">
-                Cómo inscribirte siendo Socio
+                Cómo inscribirte por 1° vez para <b>NO SOCIOS</b>
               </h4>
               <YouTube videoId={videoId} opts={opts} />
-            </div> */}
+            </div>
           </div>
-          <div>
+          <div className="w-full h-px bg-gray-600 my-5"></div>
+          <div className="flex flex-col gap-8 mt-4">
+            <div>
+              <h4 className="text-center text-xl font-medium mb-4 text-gray-700">
+                Cómo inscribirte si sos <b>NO SOCIO</b>
+              </h4>
+              <YouTube videoId={videoId2} opts={opts} />
+            </div>
+          </div>
+          <div className="w-full h-px bg-gray-600 my-5"></div>
+          {/* <div>
             <div className="flex justify-center items-center h-full backdrop-blur-sm mt-4">
               <a
                 target="_blanck"
@@ -124,7 +134,7 @@ function CampingPage({ campingData }) {
               </a>
             </div>
             <div className="w-full h-px bg-gray-600 my-5"></div>
-          </div>
+          </div> */}
         </div>
       </section>
       <Footer />
