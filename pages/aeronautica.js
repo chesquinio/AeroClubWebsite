@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import SpecialAero from "@/components/SpecialAero";
 import { mongooseConnect } from "@/lib/mongoose";
 import { AeroClubData } from "@/model/AeroClubData";
 import Head from "next/head";
@@ -92,7 +91,6 @@ function AeroclubPage({ aeroclubData }) {
               </div>
             </div>
           </div>
-          <SpecialAero />
           {/*aeroclubData[0].activeBotton && (
             <div
               className="h-64 mt-20"

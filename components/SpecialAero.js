@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SpecialAero() {
   return (
-    <div className="h-auto w-full mt-20 p-10 bg-gray-100">
+    <div className="h-auto w-full p-10 bg-gray-100">
       <h1 className="text-4xl font-light text-gray-800 text-center mb-10">
         Festival Aéreo
       </h1>
