@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import InfoClub from "@/components/InfoClub";
 import MainPage from "@/components/MainPage";
 import News from "@/components/News";
-import SpecialAero from "@/components/SpecialAero";
 import Head from "next/head";
 
 function HomePage() {
@@ -14,7 +13,6 @@ function HomePage() {
       </Head>
       <Header />
       <MainPage />
-      <SpecialAero />
       <InfoClub />
       <div className="bg-gray-100">
         <h2

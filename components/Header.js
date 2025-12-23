@@ -96,15 +96,17 @@ const Header = () => {
                   >
                     Principal
                   </Link>
-                  {/* <Link
-                    href="/aeronautica/reservas"
+                  <a
+                    href="https://turnify.ar/acr"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-gray-700 hover:bg-gray-100 rounded-bl-md rounded-br-md block px-4 py-3 text-md"
                     role="menuitem"
                     tabindex="-1"
                     id="menu-item-1"
                   >
                     Reservas
-                  </Link> */}
+                  </a>
                 </div>
               </div>
             )}
@@ -239,8 +241,10 @@ const Header = () => {
                 >
                   Principal
                 </Link>
-                {/* <Link
-                  href="/aeronautica/reservas"
+                <a
+                  href="https://turnify.ar/acr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={closeMenu}
                   className="text-gray-700 hover:bg-gray-100 block py-2 pl-10 pr-4 text-left w-full text-md"
                   role="menuitem"
@@ -248,7 +252,7 @@ const Header = () => {
                   id="menu-item-1"
                 >
                   Reservas
-                </Link> */}
+                </a>
               </div>
             )}
             <div className="flex justify-between rounded hover:bg-gray-100 transition">

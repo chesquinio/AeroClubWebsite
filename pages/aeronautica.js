@@ -88,6 +88,16 @@ function AeroclubPage({ aeroclubData }) {
                   {aeroclubData[0].primaryTitle}
                 </h3>
                 <p className="text-gray-600">{aeroclubData[0].primaryInfo}</p>
+                <div className="flex justify-center lg:justify-end mt-8">
+                  <a
+                    href="https://turnify.ar/acr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-800 text-white font-medium shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  >
+                    Hacer una Reserva
+                  </a>
+                </div>
               </div>
             </div>
           </div>
